@@ -3,26 +3,20 @@ export const runtimeContent = {
     version: 0, settings: {}, pages: [], menus: [], entities: { products: [], projects: [], services: [], hotspots: [] },
 };
 function deepMerge(target, source) {
-    if (!source || typeof source !== 'object')
-        return target;
+    if (!source || typeof source !== 'object') return target;
     for (const [key, value] of Object.entries(source)) {
         if (['__proto__', 'constructor', 'prototype'].includes(key)) continue;
-        if (Array.isArray(value))
-            target[key] = value;
+        if (Array.isArray(value)) target[key] = value;
         else if (value && typeof value === 'object') {
-            if (!target[key] || typeof target[key] !== 'object' || Array.isArray(target[key]))
-                target[key] = {};
+            if (!target[key] || typeof target[key] !== 'object' || Array.isArray(target[key])) target[key] = {};
             deepMerge(target[key], value);
-        }
-        else
-            target[key] = value;
+        } else target[key] = value;
     }
     return target;
 }
 function shadeHex(hex, amount = -20) {
     const m = String(hex || '').trim().match(/^#([0-9a-f]{6})$/i);
-    if (!m)
-        return hex || '#d83a22';
+    if (!m) return hex || '#d83a22';
     const n = parseInt(m[1], 16);
     const r = Math.max(0, Math.min(255, (n >> 16) + amount));
     const g = Math.max(0, Math.min(255, ((n >> 8) & 255) + amount));
@@ -48,8 +42,7 @@ export function applyTheme(theme = {}) {
         '--theme-card-radius': `${Number(theme.cardRadius ?? 18)}px`,
         '--theme-button-radius': `${Number(theme.buttonRadius ?? 999)}px`,
     };
-    for (const [k, v] of Object.entries(tokens))
-        root.style.setProperty(k, v);
+    for (const [k, v] of Object.entries(tokens)) root.style.setProperty(k, v);
     root.dataset.siteTheme = theme.presetId || 'custom';
 }
 function applyEntities(data) {
@@ -61,21 +54,21 @@ function applyEntities(data) {
     siteConfig.projects = projects.map(cleanMeta);
     siteConfig.services = services.map(cleanMeta);
     siteConfig.technicalHotspots = hotspots.map(cleanMeta);
-    const meta = data.settings?.divisions_meta || [];
+    const meta = (Array.isArray(data.settings?.divisions_meta) ? data.settings.divisions_meta : [])
+        .filter(d => d && d.enabled !== false)
+        .sort((a, b) => (a.sortOrder ?? a.sort_order ?? 0) - (b.sortOrder ?? b.sort_order ?? 0));
     const grouped = new Map();
     for (const p of products) {
         const key = p.categoryId || 'jenerator';
-        if (!grouped.has(key))
-            grouped.set(key, []);
+        if (!grouped.has(key)) grouped.set(key, []);
         grouped.get(key).push(cleanMeta(p));
     }
-    const divisions = meta.map((d) => ({ ...d, products: grouped.get(d.id) || [] }));
-    for (const [id, items] of grouped)
-        if (!divisions.some((d) => d.id === id))
-            divisions.push({ id, name: id, shortName: id, tagline: '', description: '', products: items });
+    const divisions = meta.map(d => ({ ...cleanCategoryMeta(d), products: grouped.get(d.id) || [] }));
+    for (const [id, items] of grouped) if (!divisions.some(d => d.id === id)) divisions.push({ id, name: id, shortName: id, tagline: '', description: '', products: items });
     siteConfig.divisions = divisions;
     siteConfig.products = products.map(cleanMeta);
 }
+function cleanCategoryMeta(obj) { const out = { ...obj }; delete out.enabled; delete out.sortOrder; delete out.sort_order; return out; }
 function cleanMeta(obj) { const out = { ...obj }; delete out._rowId; delete out.enabled; delete out.sortOrder; return out; }
 export async function loadRuntimeContent() {
     try {
@@ -83,14 +76,10 @@ export async function loadRuntimeContent() {
         let url = '/api/content', headers = {};
         if (preview) {
             const token = localStorage.getItem('asay_admin_token');
-            if (token) {
-                url = '/api/admin/preview';
-                headers.Authorization = `Bearer ${token}`;
-            }
+            if (token) { url = '/api/admin/preview'; headers.Authorization = `Bearer ${token}`; }
         }
         const res = await fetch(url, { cache: 'no-store', headers });
-        if (!res.ok)
-            return runtimeContent;
+        if (!res.ok) return runtimeContent;
         const data = await res.json();
         runtimeContent.version = Number(data.version || 0);
         runtimeContent.settings = data.settings || {};
@@ -101,10 +90,7 @@ export async function loadRuntimeContent() {
         applyTheme((runtimeContent.settings.site_config || {}).theme || {});
         applyEntities(runtimeContent);
         applySeo();
-    }
-    catch (e) {
-        console.error('CMS content load failed', e);
-    }
+    } catch (e) { console.error('CMS content load failed', e); }
     return runtimeContent;
 }
 export function hasHomePage() { return runtimeContent.pages.some(p => p.slug === '/' || p.id === 'page_home'); }
@@ -136,74 +122,26 @@ export function resolveCmsHref(link) {
 export function applySeo() {
     const page = runtimeContent.pages.find(p => p.slug === '/' || p.id === 'page_home');
     const seo = page?.seo || {};
-    if (seo.title)
-        document.title = seo.title;
-    const setMeta = (name, content, property = false) => { if (!content)
-        return; const attr = property ? 'property' : 'name'; let el = document.head.querySelector(`meta[${attr}="${name}"]`); if (!el) {
-        el = document.createElement('meta');
-        el.setAttribute(attr, name);
-        document.head.appendChild(el);
-    } el.content = content; };
+    if (seo.title) document.title = seo.title;
+    const setMeta = (name, content, property = false) => { if (!content) return; const attr = property ? 'property' : 'name'; let el = document.head.querySelector(`meta[${attr}="${name}"]`); if (!el) { el = document.createElement('meta'); el.setAttribute(attr, name); document.head.appendChild(el); } el.content = content; };
     setMeta('description', seo.description || '');
     setMeta('og:title', seo.title || '', true);
     setMeta('og:description', seo.description || '', true);
     setMeta('og:image', seo.ogImage || '', true);
     setMeta('robots', seo.index === false ? 'noindex,nofollow' : 'index,follow');
-    if (seo.canonical) {
-        let link = document.head.querySelector('link[rel="canonical"]');
-        if (!link) {
-            link = document.createElement('link');
-            link.rel = 'canonical';
-            document.head.appendChild(link);
-        }
-        link.href = seo.canonical;
-    }
+    if (seo.canonical) { let link = document.head.querySelector('link[rel="canonical"]'); if (!link) { link = document.createElement('link'); link.rel = 'canonical'; document.head.appendChild(link); } link.href = seo.canonical; }
     const favicon = cmsValue('logos.favicon', '');
-    if (favicon) {
-        let link = document.head.querySelector('link[rel="icon"]');
-        if (!link) {
-            link = document.createElement('link');
-            link.rel = 'icon';
-            document.head.appendChild(link);
-        }
-        link.href = favicon;
-    }
+    if (favicon) { let link = document.head.querySelector('link[rel="icon"]'); if (!link) { link = document.createElement('link'); link.rel = 'icon'; document.head.appendChild(link); } link.href = favicon; }
 }
 export function runCmsLink(link, actions = {}) {
-    if (!link)
-        return false;
-    if (link.type === 'action') {
-        const fn = actions[String(link.target || '')];
-        if (fn) {
-            fn();
-            return true;
-        }
-        return false;
-    }
-    if (link.type === 'product') {
-        window.dispatchEvent(new CustomEvent('cms:open-entity', { detail: { type: 'product', id: String(link.target || '') } }));
-        document.getElementById('products-section')?.scrollIntoView({ behavior: 'smooth' });
-        return true;
-    }
-    if (link.type === 'project') {
-        window.dispatchEvent(new CustomEvent('cms:open-entity', { detail: { type: 'project', id: String(link.target || '') } }));
-        document.getElementById('projects-section')?.scrollIntoView({ behavior: 'smooth' });
-        return true;
-    }
+    if (!link) return false;
+    if (link.type === 'action') { const fn = actions[String(link.target || '')]; if (fn) { fn(); return true; } return false; }
+    if (link.type === 'product') { window.dispatchEvent(new CustomEvent('cms:open-entity', { detail: { type: 'product', id: String(link.target || '') } })); document.getElementById('products-section')?.scrollIntoView({ behavior: 'smooth' }); return true; }
+    if (link.type === 'project') { window.dispatchEvent(new CustomEvent('cms:open-entity', { detail: { type: 'project', id: String(link.target || '') } })); document.getElementById('projects-section')?.scrollIntoView({ behavior: 'smooth' }); return true; }
     const href = resolveCmsHref(link);
-    if (!href || href === '#')
-        return false;
-    if (link.type === 'anchor') {
-        const el = document.getElementById(href.replace(/^#/, ''));
-        if (el) {
-            el.scrollIntoView({ behavior: 'smooth' });
-            return true;
-        }
-    }
-    if (link.newTab)
-        window.open(href, '_blank', 'noopener,noreferrer');
-    else
-        window.location.href = href;
+    if (!href || href === '#') return false;
+    if (link.type === 'anchor') { const el = document.getElementById(href.replace(/^#/, '')); if (el) { el.scrollIntoView({ behavior: 'smooth' }); return true; } }
+    if (link.newTab) window.open(href, '_blank', 'noopener,noreferrer'); else window.location.href = href;
     return true;
 }
 export function cmsButtonClass(style = 'primary', darkContext = false) {
