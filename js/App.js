@@ -18,10 +18,9 @@ import { ContactModal } from './components/ContactModal.js';
 import { VideoReelModal } from './components/VideoReelModal.js';
 import { FullCatalogModal } from './components/FullCatalogModal.js';
 import { getHomeSections, hasHomePage } from './runtimeContent.js';
+const slugify = (value = '') => String(value).toLocaleLowerCase('tr-TR').normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/ı/g, 'i').replace(/ğ/g, 'g').replace(/ü/g, 'u').replace(/ş/g, 's').replace(/ö/g, 'o').replace(/ç/g, 'c').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
 export default function App() {
-    // Public visitors always see the generator image published from CMS/admin.
     const activeGeneratorImage = siteConfig.images.heroGenerator;
-    // Modal visibility states
     const [isQuoteOpen, setIsQuoteOpen] = useState(false);
     const [quoteProductPreset, setQuoteProductPreset] = useState('');
     const [selectedProductForModal, setSelectedProductForModal] = useState(null);
@@ -30,12 +29,36 @@ export default function App() {
     const [isContactOpen, setIsContactOpen] = useState(false);
     const [isVideoReelOpen, setIsVideoReelOpen] = useState(false);
     const [isCatalogOpen, setIsCatalogOpen] = useState(false);
+    const openProduct = (product, updateUrl = true) => {
+        setSelectedProductForModal(product || null);
+        if (product && updateUrl && !new URLSearchParams(location.search).has('visualEditor')) {
+            const slug = slugify(product.slug || product.name || product.id);
+            history.pushState({ asayProduct: product.id }, '', `/urunler/${slug}`);
+        }
+    };
+    const closeProduct = () => {
+        setSelectedProductForModal(null);
+        if (location.pathname.startsWith('/urunler/')) history.pushState({}, '', '/');
+    };
+    useEffect(() => {
+        const syncRoute = () => {
+            const m = location.pathname.match(/^\/urunler\/([^/]+)\/?$/);
+            if (!m) return;
+            const slug = decodeURIComponent(m[1]);
+            const item = siteConfig.products.find(p => slugify(p.slug || p.name || p.id) === slug || String(p.id) === slug);
+            if (item) setSelectedProductForModal(item);
+        };
+        syncRoute();
+        window.addEventListener('popstate', syncRoute);
+        return () => window.removeEventListener('popstate', syncRoute);
+    }, []);
     useEffect(() => {
         const openEntity = ({ detail }) => {
             if (detail?.type === 'product') {
                 const item = siteConfig.products.find(p => p.id === detail.id);
-                if (item) setSelectedProductForModal(item);
-            } else if (detail?.type === 'project') {
+                if (item) openProduct(item);
+            }
+            else if (detail?.type === 'project') {
                 const item = siteConfig.projects.find(p => p.id === detail.id);
                 if (item) setSelectedProjectForModal(item);
             }
@@ -43,16 +66,8 @@ export default function App() {
         window.addEventListener('cms:open-entity', openEntity);
         return () => window.removeEventListener('cms:open-entity', openEntity);
     }, []);
-    // Modal open handlers
-    const handleOpenQuote = (productName = '') => {
-        setQuoteProductPreset(productName);
-        setIsQuoteOpen(true);
-    };
-    const handleOpenProducts = () => {
-        const el = document.getElementById('products-section');
-        if (el)
-            el.scrollIntoView({ behavior: 'smooth' });
-    };
+    const handleOpenQuote = (productName = '') => { setQuoteProductPreset(productName); setIsQuoteOpen(true); };
+    const handleOpenProducts = () => { const el = document.getElementById('products-section'); if (el) el.scrollIntoView({ behavior: 'smooth' }); };
     const sections = getHomeSections();
     const orderedSections = hasHomePage() ? sections : [
         { id: 'hero', type: 'hero', name: 'Hero', enabled: true },
@@ -68,18 +83,18 @@ export default function App() {
         const key = section.id;
         const cmsContent = section.content || {};
         switch (type) {
-            case 'hero': return _jsx(Hero, { cmsContent: cmsContent, onOpenQuote: () => handleOpenQuote('ASAY P33-PRO'), onOpenVideoReel: () => setIsVideoReelOpen(true), activeGeneratorImage: activeGeneratorImage }, key);
-            case 'manifesto': return _jsx(Manifesto, { cmsContent: cmsContent, onExploreSolutions: handleOpenProducts, onOpenAbout: () => setIsAboutOpen(true), activeGeneratorImage: activeGeneratorImage }, key);
+            case 'hero': return _jsx(Hero, { cmsContent, onOpenQuote: () => handleOpenQuote('ASAY P33-PRO'), onOpenVideoReel: () => setIsVideoReelOpen(true), activeGeneratorImage }, key);
+            case 'manifesto': return _jsx(Manifesto, { cmsContent, onExploreSolutions: handleOpenProducts, onOpenAbout: () => setIsAboutOpen(true), activeGeneratorImage }, key);
             case 'technical':
-            case 'hotspot': return _jsx(TechnicalBreakdown, { cmsContent: cmsContent, activeGeneratorImage: activeGeneratorImage, onOpenQuote: () => handleOpenQuote('Özel Akustik / Senkron Proje') }, key);
-            case 'products': return _jsx(ProductCategories, { cmsContent: cmsContent, onSelectProduct: (prod) => setSelectedProductForModal(prod), onOpenQuoteWithProduct: (name) => handleOpenQuote(name), onOpenAllProducts: () => setIsCatalogOpen(true) }, key);
+            case 'hotspot': return _jsx(TechnicalBreakdown, { cmsContent, activeGeneratorImage, onOpenQuote: () => handleOpenQuote('Özel Akustik / Senkron Proje') }, key);
+            case 'products': return _jsx(ProductCategories, { cmsContent, onSelectProduct: prod => openProduct(prod), onOpenQuoteWithProduct: name => handleOpenQuote(name), onOpenAllProducts: () => setIsCatalogOpen(true) }, key);
             case 'services':
-            case 'cards': return _jsx(FacilityServices, { cmsContent: cmsContent, onOpenQuote: () => handleOpenQuote('') }, key);
-            case 'projects': return _jsx(FeaturedProjects, { cmsContent: cmsContent, onSelectProject: (proj) => setSelectedProjectForModal(proj), onOpenQuote: () => handleOpenQuote('') }, key);
+            case 'cards': return _jsx(FacilityServices, { cmsContent, onOpenQuote: () => handleOpenQuote('') }, key);
+            case 'projects': return _jsx(FeaturedProjects, { cmsContent, onSelectProject: proj => setSelectedProjectForModal(proj), onOpenQuote: () => handleOpenQuote('') }, key);
             case 'finalCta':
-            case 'cta': return _jsx(FinalCTA, { cmsContent: cmsContent, onOpenQuote: () => handleOpenQuote(''), onOpenContact: () => setIsContactOpen(true), activeGeneratorImage: activeGeneratorImage }, key);
+            case 'cta': return _jsx(FinalCTA, { cmsContent, onOpenQuote: () => handleOpenQuote(''), onOpenContact: () => setIsContactOpen(true), activeGeneratorImage }, key);
             default: return null;
         }
     };
-    return (_jsxs("div", { className: "min-h-screen bg-[var(--theme-surface)] text-[var(--theme-dark)] flex flex-col font-sans selection:bg-[var(--theme-accent)] selection:text-white", children: [_jsx(Navbar, { onOpenQuote: () => handleOpenQuote(''), onOpenAbout: () => setIsAboutOpen(true), onOpenContact: () => setIsContactOpen(true), onOpenProducts: handleOpenProducts }), _jsx("main", { className: "flex-1 w-full", children: orderedSections.filter((s) => s.enabled !== false).map((s) => _jsx("div", { className: "cms-section", style: { display: 'contents' }, "data-cms-spacing": s.content?.spacing || 'large', "data-cms-align": s.content?.align || 'left', "data-cms-background": s.content?.background || 'default', children: renderSection(s) }, s.id)) }), _jsx(Footer, { onOpenAbout: () => setIsAboutOpen(true), onOpenContact: () => setIsContactOpen(true), onOpenQuote: () => handleOpenQuote('') }), _jsx(QuoteModal, { isOpen: isQuoteOpen, onClose: () => setIsQuoteOpen(false), defaultProduct: quoteProductPreset }), _jsx(ProductDetailModal, { product: selectedProductForModal, onClose: () => setSelectedProductForModal(null), onOpenQuoteWithProduct: (name) => handleOpenQuote(name) }), _jsx(ProjectDetailModal, { project: selectedProjectForModal, onClose: () => setSelectedProjectForModal(null), onOpenQuote: () => handleOpenQuote('') }), _jsx(AboutModal, { isOpen: isAboutOpen, onClose: () => setIsAboutOpen(false), onOpenQuote: () => { setIsAboutOpen(false); handleOpenQuote(''); } }), _jsx(ContactModal, { isOpen: isContactOpen, onClose: () => setIsContactOpen(false) }), _jsx(VideoReelModal, { isOpen: isVideoReelOpen, onClose: () => setIsVideoReelOpen(false), onOpenQuote: () => { setIsVideoReelOpen(false); handleOpenQuote(''); } }), _jsx(FullCatalogModal, { isOpen: isCatalogOpen, onClose: () => setIsCatalogOpen(false), onSelectProduct: (prod) => { setIsCatalogOpen(false); setSelectedProductForModal(prod); }, onOpenQuoteWithProduct: (name) => { setIsCatalogOpen(false); handleOpenQuote(name); } })] }));
+    return (_jsxs("div", { className: "min-h-screen bg-[var(--theme-surface)] text-[var(--theme-dark)] flex flex-col font-sans selection:bg-[var(--theme-accent)] selection:text-white", children: [_jsx(Navbar, { onOpenQuote: () => handleOpenQuote(''), onOpenAbout: () => setIsAboutOpen(true), onOpenContact: () => setIsContactOpen(true), onOpenProducts: handleOpenProducts }), _jsx("main", { className: "flex-1 w-full", children: orderedSections.filter(s => s.enabled !== false).map(s => _jsx("div", { className: "cms-section", style: { display: 'contents' }, "data-cms-section-id": s.id, "data-cms-section-type": s.type, "data-cms-spacing": s.content?.spacing || 'large', "data-cms-align": s.content?.align || 'left', "data-cms-background": s.content?.background || 'default', children: renderSection(s) }, s.id)) }), _jsx(Footer, { onOpenAbout: () => setIsAboutOpen(true), onOpenContact: () => setIsContactOpen(true), onOpenQuote: () => handleOpenQuote('') }), _jsx(QuoteModal, { isOpen: isQuoteOpen, onClose: () => setIsQuoteOpen(false), defaultProduct: quoteProductPreset }), _jsx(ProductDetailModal, { product: selectedProductForModal, onClose: closeProduct, onOpenQuoteWithProduct: name => handleOpenQuote(name) }), _jsx(ProjectDetailModal, { project: selectedProjectForModal, onClose: () => setSelectedProjectForModal(null), onOpenQuote: () => handleOpenQuote('') }), _jsx(AboutModal, { isOpen: isAboutOpen, onClose: () => setIsAboutOpen(false), onOpenQuote: () => { setIsAboutOpen(false); handleOpenQuote(''); } }), _jsx(ContactModal, { isOpen: isContactOpen, onClose: () => setIsContactOpen(false) }), _jsx(VideoReelModal, { isOpen: isVideoReelOpen, onClose: () => setIsVideoReelOpen(false), onOpenQuote: () => { setIsVideoReelOpen(false); handleOpenQuote(''); } }), _jsx(FullCatalogModal, { isOpen: isCatalogOpen, onClose: () => setIsCatalogOpen(false), onSelectProduct: prod => { setIsCatalogOpen(false); openProduct(prod); }, onOpenQuoteWithProduct: name => { setIsCatalogOpen(false); handleOpenQuote(name); } })] }));
 }
