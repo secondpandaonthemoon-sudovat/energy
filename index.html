@@ -29,9 +29,7 @@
         const raw = typeof input === 'string' ? input : input?.url;
         if (!raw) return nativeFetch(input, init);
         const u = new URL(raw, window.location.origin);
-
         if (u.pathname === '/api/content') return nativeFetch(contentUrl, init);
-
         if (u.pathname.startsWith('/api/admin/')) {
           const route = u.pathname.replace(/^\/api\//, '');
           const target = new URL(adminUrl);
@@ -39,43 +37,44 @@
           u.searchParams.forEach((v, k) => target.searchParams.append(k, v));
           return nativeFetch(target.toString(), init);
         }
-
         if (u.pathname === '/api/quotes' || u.pathname === '/api/contact' || u.pathname === '/api/translate/batch') {
           const route = u.pathname.replace(/^\/api\//, '');
           const target = new URL(publicUrl);
           target.searchParams.set('route', route);
           return nativeFetch(target.toString(), init);
         }
-
         return nativeFetch(input, init);
       };
 
       const pairs = [
-        ['POWER SYSTEMS', 'GÜÇ SİSTEMLERİ'],
-        ['Standby & Prime Standart', 'Yedek & Sürekli Güç Standartları'],
-        ['Load Bank Test', 'Yük Bankası Testi'],
-        ['Load Bank', 'Yük Bankası'],
         ['CAD EXPLODED VIEW // 400V 50HZ 3-PHASE', 'CAD PATLATILMIŞ GÖRÜNÜM // 400 V 50 HZ 3 FAZ'],
-        ['Standby', 'Yedek Güç'],
         ['MODEL: DIESEL-GENERATOR-SETS', 'MODEL: DİZEL-JENERATÖR-SETLERİ'],
-        ['Power Solutions', 'Güç Çözümleri'],
+        ['Standby & Prime Standart', 'Yedek & Sürekli Güç Standartları'],
+        ['Maintenance & Spares', 'Bakım & Yedek Parça'],
         ['Turnkey Projects', 'Anahtar Teslim Projeler'],
         ['Technical Service', 'Teknik Servis'],
-        ['Maintenance & Spares', 'Bakım & Yedek Parça'],
+        ['Power Solutions', 'Güç Çözümleri'],
+        ['POWER SYSTEMS', 'GÜÇ SİSTEMLERİ'],
+        ['Load Bank Test', 'Yük Bankası Testi'],
         ['Data Center', 'Veri Merkezi'],
+        ['Load Bank', 'Yük Bankası'],
+        ['Standby', 'Yedek Güç'],
         ['POWER', 'GÜÇ']
       ];
-      const enToTr = new Map(pairs);
-      const trToEn = new Map(pairs.map(([en,tr]) => [tr,en]));
       const attrs = ['aria-label','title','placeholder','alt'];
 
       function activeLang() {
         return localStorage.getItem('asay_language') === 'en' ? 'en' : 'tr';
       }
-      function convertExact(value) {
+      function convertText(value) {
         if (!value) return value;
         const lang = activeLang();
-        return lang === 'tr' ? (enToTr.get(value.trim()) || value) : (trToEn.get(value.trim()) || value);
+        let out = String(value);
+        const ordered = lang === 'tr' ? pairs : pairs.map(([en,tr]) => [tr,en]);
+        for (const [from, to] of ordered) {
+          if (out.includes(from)) out = out.split(from).join(to);
+        }
+        return out;
       }
       function fixNode(root = document.body) {
         if (!root) return;
@@ -83,18 +82,17 @@
         let node;
         while ((node = walker.nextNode())) {
           const raw = node.nodeValue || '';
-          const trimmed = raw.trim();
-          if (!trimmed) continue;
-          const converted = convertExact(trimmed);
-          if (converted !== trimmed) node.nodeValue = raw.replace(trimmed, converted);
+          if (!raw.trim()) continue;
+          const converted = convertText(raw);
+          if (converted !== raw) node.nodeValue = converted;
         }
         const els = root.querySelectorAll ? root.querySelectorAll('*') : [];
         for (const el of els) {
           for (const attr of attrs) {
             const value = el.getAttribute?.(attr);
             if (!value) continue;
-            const converted = convertExact(value.trim());
-            if (converted !== value.trim()) el.setAttribute(attr, converted);
+            const converted = convertText(value);
+            if (converted !== value) el.setAttribute(attr, converted);
           }
         }
       }
@@ -106,12 +104,13 @@
       }
       window.addEventListener('asay-language-change', scheduleFix);
       window.addEventListener('storage', e => { if (e.key === 'asay_language') scheduleFix(); });
-      new MutationObserver(scheduleFix).observe(document.documentElement, { childList:true, subtree:true, characterData:true });
+      new MutationObserver(scheduleFix).observe(document.documentElement, { childList:true, subtree:true, characterData:true, attributes:true, attributeFilter:attrs });
       document.addEventListener('DOMContentLoaded', scheduleFix);
-      setTimeout(scheduleFix, 250);
-      setTimeout(scheduleFix, 1200);
+      setTimeout(scheduleFix, 100);
+      setTimeout(scheduleFix, 500);
+      setTimeout(scheduleFix, 1500);
     })();
   </script>
-  <script type="module" src="/assets/app.js?v=studio-3-7-admin-live-langfix"></script>
+  <script type="module" src="/assets/app.js?v=studio-3-7-admin-live-langfix2"></script>
 </body>
 </html>
