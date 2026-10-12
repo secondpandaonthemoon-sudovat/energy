@@ -48,3 +48,7 @@ Testler uygulamanın her özelliğinin her koşulda kusursuz olduğunu kanıtlam
 Orijinal görseller, başlangıç CMS verisi ve veritabanı şeması korunmuştur. GitHub teslimatında gerçek `config/database.php` dışarıda tutulur; ZIP kurulum şablonu içerir. Mevcut sitenizi güncellerken sunucudaki veritabanı bağlantısı, yüklenen dosyalar ve kurulum kilidini koruyun. Canlı veritabanının içeriği yüklenen ZIP içinde bulunmadığından yerel test başlangıç verileriyle yapıldı.
 
 İçerik ve görünüm alanları geniş ölçüde düzenlenebilir; yeni işlevler, tamamen yeni şablonlar ve yapılandırmada bulunmayan sabit arayüz metinleri hâlâ kod değişikliği gerektirir. Çalışma gerçek sunucuya yüklenmedi. Kullanıcının isteğiyle GitHub üzerinden teslimat hazırlandı.
+
+## XAMPP alt klasör ve başlangıç düzeltmesi
+
+`asayenergy1` gibi alt klasörlerde JavaScript/CSS, API, medya, admin ve önizleme yolları kurulum köküne göre çözülür. Apache PHP giriş sayfası doğru temel yolu belirtir; doğrudan `index.html` için de destek vardır. Apache CGI/FastCGI oturum başlığının iletilmesi düzeltildi. Açılış hatası ve API zaman aşımı artık sonsuz yükleme yerine açıklanır. Gerçek Apache alt klasör, giriş, taslak/önizleme/yayın, iletişim, güvenli yükleme ve oturum testleri geçti.

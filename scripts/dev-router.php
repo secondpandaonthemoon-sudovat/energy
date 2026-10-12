@@ -12,4 +12,5 @@ if (strpos($path, '/api/') === 0) {
 }
 $file = realpath($root.$path);
 if ($path !== '/' && $file && strpos($file, $root.DIRECTORY_SEPARATOR) === 0 && is_file($file)) return false;
-require $root.'/index.html';
+$_SERVER['SCRIPT_NAME'] = '/index.php';
+require $root.'/index.php';

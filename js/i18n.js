@@ -1,3 +1,4 @@
+import { appUrl } from './appPaths.js';
 import { useEffect, useState } from 'react';
 const STORAGE_KEY = 'asay_language';
 const EVENT_NAME = 'asay-language-change';
@@ -141,7 +142,7 @@ async function fetchUnknown(texts, gen) {
     if (!unique.length || currentLanguage !== 'en')
         return;
     try {
-        const r = await fetch('/api/translate/batch', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ target: 'en', texts: unique }) });
+        const r = await fetch(appUrl('/api/translate/batch'), { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ target: 'en', texts: unique }) });
         if (!r.ok)
             return;
         const d = await r.json();

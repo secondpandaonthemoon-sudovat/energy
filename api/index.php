@@ -9,7 +9,7 @@ header('Referrer-Policy: strict-origin-when-cross-origin');
 $method=$_SERVER['REQUEST_METHOD'] ?? 'GET';
 $uri=parse_url($_SERVER['REQUEST_URI'] ?? '/',PHP_URL_PATH) ?: '/';
 $base='/api/';
-$route=str_starts_with($uri,$base)?substr($uri,strlen($base)):trim((string)($_GET['route']??''),'/');
+$route=isset($_GET['route']) ? trim((string)$_GET['route'],'/') : (str_starts_with($uri,$base)?substr($uri,strlen($base)):'');
 $route=trim($route,'/');
 $body=read_json_body();
 $pdo=db();

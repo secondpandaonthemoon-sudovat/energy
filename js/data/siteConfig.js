@@ -1,3 +1,4 @@
+import { resolveAssetTree } from '../appPaths.js';
 export const siteConfig = {
     brand: {
         name: 'ASAY ENERGY',
@@ -540,3 +541,5 @@ export const siteConfig = {
         },
     ],
 };
+
+Object.assign(siteConfig, resolveAssetTree(siteConfig));

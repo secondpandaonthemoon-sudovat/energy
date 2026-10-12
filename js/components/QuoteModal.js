@@ -1,3 +1,4 @@
+import { appUrl } from '../appPaths.js';
 import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 import React, { useEffect, useMemo, useState, useRef } from 'react';
 import { X, CheckCircle2, ArrowRight, Calculator, ShieldCheck } from 'lucide-react';
@@ -110,7 +111,7 @@ export const QuoteModal = ({ isOpen, onClose, defaultProduct = '' }) => {
         setSubmitError('');
         try {
             const payload = { divisionId, divisionName: selectedDivision?.name || '', productId, productName: selectedProduct?.name || '', capacity, capacityLabel: capacities.find(x => x.id === capacity)?.label || capacity, canopyType: divisionId === 'jenerator' ? canopyType : '', sector: divisionId === 'jenerator' ? sector : '', name, company, phone, email, city, notes };
-            const res = await fetch('/api/quotes', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+            const res = await fetch(appUrl('/api/quotes'), { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
             const data = await res.json();
             if (!res.ok)
                 throw new Error(data.error || 'Teklif talebi gönderilemedi.');

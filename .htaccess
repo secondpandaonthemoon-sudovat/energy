@@ -1,6 +1,10 @@
 Options -Indexes
-DirectoryIndex index.html
+DirectoryIndex index.php index.html
 RewriteEngine On
+
+# Preserve Bearer authentication with Apache CGI/FastCGI (XAMPP and hosting).
+CGIPassAuth On
+RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
 
 # API is routed to PHP
 RewriteRule ^api/(.*)$ api/index.php?route=$1 [QSA,L]
@@ -14,7 +18,7 @@ RewriteCond %{REQUEST_FILENAME} -d
 RewriteRule ^ - [L]
 
 # React admin route / client-side routes
-RewriteRule ^ index.html [L]
+RewriteRule ^ index.php [L]
 
 <IfModule mod_headers.c>
   Header always set X-Content-Type-Options "nosniff"

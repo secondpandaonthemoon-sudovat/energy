@@ -23,7 +23,10 @@ function db() {
     $value=getenv($name); if ($value!==false) $cfg[$key]=$value;
   }
   $cfg+=['host'=>'localhost','port'=>3306,'database'=>'ASAY_DB_ADI','username'=>'','password'=>'','charset'=>'utf8mb4'];
-  if (($cfg['database']??'')==='ASAY_DB_ADI') json_response(['error'=>'Veritabanı kurulumu yapılmamış. /install.php adresini açın.'],503);
+  if (($cfg['database']??'')==='ASAY_DB_ADI') {
+    $base=rtrim(str_replace('\\','/',dirname(dirname($_SERVER['SCRIPT_NAME']??'/api/index.php'))), '/.');
+    json_response(['error'=>'Veritabanı kurulumu yapılmamış. '.$base.'/install.php adresini açın.'],503);
+  }
   $dsn=sprintf('mysql:host=%s;port=%d;dbname=%s;charset=%s',$cfg['host'],$cfg['port']??3306,$cfg['database'],$cfg['charset']??'utf8mb4');
   try {
     $pdo=new PDO($dsn,$cfg['username'],$cfg['password'],[

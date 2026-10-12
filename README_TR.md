@@ -19,7 +19,7 @@ Bu paket mevcut PHP/MySQL API ve React sitesini korur. Admin paneli `/admin` adr
 
 ## Yeni kurulum
 
-Apache + mod_rewrite, PHP 7.4 veya üstü, PDO MySQL, DOM, mbstring ve MySQL/MariaDB gerekir. PHP 8.4 + MariaDB 11.8 ile test edildi. Alan adı köküne yükleyin; `.htaccess` dosyaları dahil olsun. Veritabanını oluşturun, `config/`, `data/`, `uploads/` dizinlerine uygun yazma yetkisi verin. `install.php` üzerinden veritabanı bağlantısını ve en az 10 karakterlik admin parolasını belirleyin. Kurulumdan sonra `install.php` ve `php_test.php` dosyalarını sunucudan kaldırın.
+Apache + mod_rewrite, PHP 7.4 veya üstü, PDO MySQL, DOM, mbstring ve MySQL/MariaDB gerekir. PHP 8.4 + MariaDB 11.8 ile test edildi. Alan adı köküne veya `asayenergy1` gibi bir alt klasöre yükleyin; `.htaccess` dosyaları dahil olsun. Veritabanını oluşturun, `config/`, `data/`, `uploads/` dizinlerine uygun yazma yetkisi verin. `install.php` üzerinden veritabanı bağlantısını ve en az 10 karakterlik admin parolasını belirleyin. Kurulumdan sonra `install.php` ve `php_test.php` dosyalarını sunucudan kaldırın.
 
 DOM, SVG yüklemelerini güvenli incelemek için gerekir. Mevcut SVG dosyaları korunur; güvenli olmayan yeni SVG dosyaları reddedilir.
 
@@ -59,3 +59,7 @@ Panelde içerik, listeler, medya, tema, menü ve SEO alanları düzenlenebilir. 
 ## Parallax güncellemesi
 
 Açılış bölümü referans videoya göre katmanlı kaydırma sahnesine dönüştürüldü. Mobil ve “hareketi azalt” tercihinde normal akış kullanılır. Ayrıntılı karşılaştırma ve sınırlar `PARALLAX_KARSILASTIRMA.md` dosyasındadır. `tests/parallax-regression.cjs` ile kaydırma, boyut değiştirme, bölüm sıralaması ve erişilebilirlik kontrolleri yapılabilir. Yeni dosyaları yüklerken `assets/app.js`, `assets/tailwind.css`, `assets/site.css` ve `index.html` birlikte güncellenmelidir.
+
+## Localhost açılış düzeltmesi
+
+XAMPP alt klasör kurulumu desteklenir. `http://localhost/asayenergy1/` ve `http://localhost/asayenergy1/admin` adreslerini kullanın. Ayrıntılar `KURULUM_XAMPP.md` dosyasındadır. Güncel dağıtım gerçek `config/database.php` dosyasını içermez; mevcut bağlantınız korunur. Yeni kurulumda kurulum aracı bu dosyayı oluşturur.

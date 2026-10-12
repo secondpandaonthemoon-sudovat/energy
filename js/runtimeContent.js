@@ -1,3 +1,4 @@
+import { appUrl, assetUrl, localPath, resolveAssetTree } from './appPaths.js';
 import { siteConfig } from './data/siteConfig.js';
 export const runtimeContent = {
     version: 0, settings: {}, pages: [], menus: [], entities: { products: [], projects: [], services: [], hotspots: [] },
@@ -78,6 +79,9 @@ function applyEntities(data) {
 }
 function cleanMeta(obj) { const out = { ...obj }; delete out._rowId; delete out.enabled; delete out.sortOrder; return out; }
 export async function loadRuntimeContent() {
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), 6000);
+    runtimeContent.loadError = null;
     try {
         const preview = new URLSearchParams(location.search).get('cmsPreview') === '1';
         let url = '/api/content', headers = {};
@@ -88,10 +92,11 @@ export async function loadRuntimeContent() {
                 headers.Authorization = `Bearer ${token}`;
             }
         }
-        const res = await fetch(url, { cache: 'no-store', headers });
-        if (!res.ok)
-            return runtimeContent;
-        const data = await res.json();
+        const res = await fetch(appUrl(url), { cache: 'no-store', headers, signal: controller.signal });
+        if (!res.ok) throw new Error(`CMS HTTP ${res.status}`);
+        const raw = await res.json();
+        if (!raw || !Array.isArray(raw.pages) || !raw.settings || !raw.entities) throw new Error('Invalid CMS response');
+        const data = resolveAssetTree(raw);
         runtimeContent.version = Number(data.version || 0);
         runtimeContent.settings = data.settings || {};
         runtimeContent.pages = data.pages || [];
@@ -103,8 +108,10 @@ export async function loadRuntimeContent() {
         applySeo();
     }
     catch (e) {
-        console.error('CMS content load failed', e);
+        runtimeContent.loadError = e.name === 'AbortError' ? 'timeout' : 'unavailable';
+        console.warn('CMS content unavailable; showing bundled preview.');
     }
+    finally { clearTimeout(timer); }
     return runtimeContent;
 }
 export function hasHomePage() { return runtimeContent.pages.some(p => p.slug === '/' || p.id === 'page_home'); }
@@ -129,8 +136,8 @@ export function resolveCmsHref(link) {
         case 'email': return target.startsWith('mailto:') ? target : `mailto:${target}`;
         case 'anchor': return target.startsWith('#') ? target : `#${target}`;
         case 'external': return /^https?:\/\//i.test(target) ? target : '#';
-        case 'file': return target.startsWith('/uploads/') || target.startsWith('/src/assets/') ? target : '#';
-        default: return /^(?:\/(?!\/)|#[^\s]*$|https?:\/\/)/i.test(target) && !/[\\\u0000-\u0020]/.test(target) ? target : '#';
+        case 'file': return /^\/(?:uploads|src\/assets)\//.test(localPath(target)) && !/[\\\u0000-\u0020]/.test(target) ? assetUrl(target) : '#';
+        default: return /^(?:\/(?!\/)|#[^\s]*$|https?:\/\/)/i.test(target) && !/[\\\u0000-\u0020]/.test(target) ? appUrl(target) : '#';
     }
 }
 export function applySeo() {

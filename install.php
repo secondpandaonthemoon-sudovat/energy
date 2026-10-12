@@ -2,6 +2,7 @@
 error_reporting(E_ALL);
 ini_set('display_errors','1');
 $root=__DIR__;
+$appBase=rtrim(str_replace('\\','/',dirname($_SERVER['SCRIPT_NAME']??'/install.php')), '/.');
 $lock=$root.'/data/installed.lock';
 $msg='';$err='';
 function h($v){return htmlspecialchars((string)$v,ENT_QUOTES,'UTF-8');}
@@ -51,7 +52,7 @@ if(version_compare(PHP_VERSION,'7.4.0','<')){
       $cfg="<?php\nreturn ".var_export(array('host'=>$host,'port'=>$port,'database'=>$database,'username'=>$username,'password'=>$password,'charset'=>'utf8mb4'),true).";\n";
       if(@file_put_contents($root.'/config/database.php',$cfg)===false) throw new Exception('config/database.php yazılamadı. config klasör izinlerini kontrol edin.');
       if(@file_put_contents($lock,date('c'))===false) throw new Exception('data/installed.lock yazılamadı. data klasör izinlerini kontrol edin.');
-      $msg='Kurulum tamamlandı. /admin adresinden giriş yapabilirsiniz. Güvenlik için install.php ve php_test.php dosyalarını silin.';
+      $msg='Kurulum tamamlandı. '.$appBase.'/admin adresinden giriş yapabilirsiniz. Güvenlik için install.php ve php_test.php dosyalarını silin.';
     } catch(Exception $e){
       $err='Kurulum hatası: '.$e->getMessage();
     }

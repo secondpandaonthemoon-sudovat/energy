@@ -8,13 +8,14 @@ Geliştirilmiş yönetim paneli ve referans videoya göre düzenlenmiş parallax
 
 Alternatif: `releases/asayenergy.zip` dosyasını açıp GitHub üzerindeki **Download raw file** düğmesini kullanın. Özel depolarda GitHub hesabınızla oturum açmanız gerekir.
 
+- [XAMPP: asayenergy1 kurulumu ve güncelleme](KURULUM_XAMPP.md)
 - [Kurulum ve kullanım](README_TR.md)
 - [Parallax karşılaştırması](PARALLAX_KARSILASTIRMA.md)
 - [Diğer değişiklikler ve test kapsamı](DEGISIKLIK_RAPORU.md)
 
 ## Yapılandırma
 
-Gerçek veritabanı bağlantı bilgileri bu depoya veya dağıtım ZIP'ine dahil edilmemiştir. ZIP yalnızca kurulum şablonu içerir. Yeni kurulum için `install.php` kullanın; mevcut sunucuyu güncellerken sunucudaki `config/database.php`, `data/installed.lock` ve `uploads/` dizinini koruyun. Kurulumu mevcut veritabanına tekrar çalıştırmayın.
+Gerçek veritabanı bağlantı bilgileri bu depoya veya dağıtım ZIP'ine dahil edilmemiştir. ZIP yalnızca `config/database.php.example` şablonunu içerir; mevcut bağlantı dosyanızın üstüne yazmaz. Yeni kurulum için `install.php` kullanın; mevcut sunucuyu güncellerken sunucudaki `config/database.php`, `data/installed.lock` ve `uploads/` dizinini koruyun. Kurulumu mevcut veritabanına tekrar çalıştırmayın.
 
 Kaynak depoyu klonladıysanız yapılandırmayı `config/database.php.example` dosyasından oluşturabilir veya kurulum aracını kullanabilirsiniz.
 

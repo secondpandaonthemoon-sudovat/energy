@@ -1,3 +1,4 @@
+import { appUrl } from '../appPaths.js';
 import { jsx as _jsx, jsxs as _jsxs, Fragment as _Fragment } from "react/jsx-runtime";
 import React, { useState, useEffect, useRef } from 'react';
 import { X, Mail, Phone, MapPin, CheckCircle2, Clock } from 'lucide-react';
@@ -21,7 +22,7 @@ export const ContactModal = ({ isOpen, onClose }) => {
         const values = Object.fromEntries(new FormData(e.currentTarget));
         submitting.current = true; setSending(true); setError('');
         try {
-            const response = await fetch('/api/contact', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(values) });
+            const response = await fetch(appUrl('/api/contact'), { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(values) });
             const result = await response.json();
             if (!response.ok) throw new Error(result.error || 'Mesaj gönderilemedi.');
             setSent(true);
