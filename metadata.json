@@ -1,0 +1,7 @@
+{
+  "name": "ASAY ENERGY - Endüstriyel Güç & Enerji Çözümleri",
+  "description": "ASAY Energy endüstriyel güç ve enerji sistemleri.",
+  "capabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

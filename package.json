@@ -4,13 +4,16 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "dev": "node scripts/build.mjs && node server.js",
+    "start": "node server.js",
     "build": "node scripts/build.mjs",
     "test": "node tests/runtime-regression.mjs"
   },
   "dependencies": {
+    "express": "^5.3.0",
+    "lucide-react": "0.546.0",
     "react": "19.0.1",
-    "react-dom": "19.0.1",
-    "lucide-react": "0.546.0"
+    "react-dom": "19.0.1"
   },
   "devDependencies": {
     "esbuild": "0.25.12",
