@@ -1,0 +1,6 @@
+node_modules/
+config/database.php
+data/installed.lock
+uploads/*
+!uploads/.htaccess
+*.log

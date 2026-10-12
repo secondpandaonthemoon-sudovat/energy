@@ -1,0 +1,1030 @@
+{
+  "version": 1,
+  "settings": {
+    "site_config": {
+      "brand": {
+        "name": "ASAY ENERGY",
+        "tagline": "Endüstriyel Kesintisiz Güç & Enerji Sistemleri",
+        "phone": "+90 (212) 850 44 20",
+        "emergencyHotline": "+90 (850) 440 24 70",
+        "email": "info@asayenergy.com",
+        "salesEmail": "teklif@asayenergy.com",
+        "address": "Organize Sanayi Bölgesi, Enerji Bulvarı No:42, İstanbul, Türkiye",
+        "certifications": [
+          "ISO 9001:2015",
+          "ISO 14001",
+          "ISO 45001",
+          "CE Sertifikalı",
+          "TSE"
+        ]
+      },
+      "images": {
+        "heroGenerator": "/src/assets/images/hero_generator_transparent.png",
+        "facilityEngineer": "/src/assets/images/facility_engineer_site_1791548168152.jpg",
+        "datacenterProject": "/src/assets/images/project_datacenter_1791548180269.jpg",
+        "hospitalProject": "/src/assets/images/project_hospital_1791548192579.jpg",
+        "industrialPlantProject": "/src/assets/images/project_industrial_plant_1791548204186.jpg",
+        "steamBoiler": "/src/assets/images/boiler_steam_unit_1791552428866.jpg",
+        "transformer": "/src/assets/images/transformer_power_1791552441601.jpg",
+        "cogeneration": "/src/assets/images/cogeneration_unit_1791552452294.jpg",
+        "batteryStorage": "/src/assets/images/bess_battery_storage_1791552461835.jpg",
+        "heroDecorative": ""
+      },
+      "heroStats": [
+        {
+          "value": "99.8%",
+          "label": "Operasyonel Güvenilirlik",
+          "sub": "Standby & Prime Standart"
+        },
+        {
+          "value": "24/7",
+          "label": "Teknik Servis & Destek",
+          "sub": "Mobil Servis Desteği"
+        },
+        {
+          "value": "150+",
+          "label": "Tamamlanan Mega Proje",
+          "sub": "Veri Merkezi & Sanayi"
+        }
+      ],
+      "manifesto": {
+        "kicker": "MİSYONUMUZ",
+        "heading": "Enerjinin durduğu yerde iş durmaz.\nBiz gücü kesintisiz devam ettiririz.",
+        "subtext": "Kritik sanayi tesisleri, veri merkezleri ve sağlık kompleksleri için yüksek mühendislik standardında jeneratör, buhar kazanı, trafo, kojenerasyon ve enerji depolama çözümleri üretiyoruz.",
+        "buttonText": "Çözümlerimizi Keşfedin"
+      },
+      "theme": {
+        "presetId": "asay-orange",
+        "presetName": "ASAY Signature",
+        "primary": "#F1482E",
+        "accent": "#F1482E",
+        "dark": "#080808",
+        "light": "#F8F8F7",
+        "white": "#FFFFFF",
+        "background": "#FFFFFF",
+        "surface": "#FFFFFF",
+        "text": "#080808",
+        "mutedText": "#6B7280",
+        "border": "#E5E7EB",
+        "cardRadius": 18,
+        "buttonRadius": 999,
+        "bodyFont": "'Plus Jakarta Sans', sans-serif",
+        "headingFont": "'Space Grotesk', 'Plus Jakarta Sans', sans-serif"
+      },
+      "logos": {
+        "main": "",
+        "dark": "",
+        "light": "",
+        "mobile": "",
+        "favicon": "",
+        "footer": "",
+        "width": 180,
+        "maxHeight": 56,
+        "mobileWidth": 140
+      },
+      "social": {
+        "instagram": {
+          "url": "",
+          "enabled": false
+        },
+        "linkedin": {
+          "url": "",
+          "enabled": false
+        },
+        "youtube": {
+          "url": "",
+          "enabled": false
+        },
+        "facebook": {
+          "url": "",
+          "enabled": false
+        },
+        "x": {
+          "url": "",
+          "enabled": false
+        },
+        "whatsapp": {
+          "url": "",
+          "enabled": false
+        }
+      },
+      "footer": {
+        "description": "Endüstriyel kesintisiz güç ve enerji sistemleri.",
+        "copyright": "© 2026 ASAY Energy. Tüm hakları saklıdır.",
+        "contactLabel": "MOBİL",
+        "contactPhone": "+90 (850) 440 24 70"
+      },
+      "hero": {
+        "eyebrow": "AĞIR HİZMET GÜÇ SİSTEMLERİ · 15 - 2500 kVA",
+        "metaLeft": "STOKTAN DERHAL TESLİM",
+        "metaRight": "AVRUPA MOTOR & ALTERNATÖR GÜVENCESİ",
+        "titleTop": "KESİNTİSİZ",
+        "titleBottom": "GÜÇ",
+        "badgeTitle": "P33-PRO / YÜKSEK PERFORMANS",
+        "badgeDescription": "33 kVA Süper Sessiz Kabinli Endüstriyel Dizel Jeneratör Seti.",
+        "badgeLink": "Teknik Şartnameyi İncele",
+        "videoTitle": "Saha Test Videosunu İzle",
+        "videoSubtitle": "Fabrika Yük Testi (Load Bank Test)",
+        "scrollLabel": "AŞAĞI KAYDIR",
+        "quoteLabel": "TEKLİF AL"
+      },
+      "heroStyle": {
+        "titleTopSizeMobile": 15.6,
+        "titleTopSizeDesktop": 13.4,
+        "titleTopOffsetY": 18,
+        "titleBottomSizeMobile": 18.2,
+        "titleBottomSizeDesktop": 15.2,
+        "titleBottomOffsetY": 0,
+        "decorativeAutoCenter": true,
+        "decorativeSize": 680,
+        "decorativeWidthVw": 62,
+        "decorativeOffsetX": 0,
+        "decorativeOffsetY": 0,
+        "decorativeOpacity": 90,
+        "decorativeShape": "circle",
+        "decorativeColor": "#F1482E"
+      },
+      "navbar": {
+        "ctaLabel": "Teklif Al",
+        "logoSubtitle": "POWER SYSTEMS",
+        "cta": {
+          "text": "Teklif Al",
+          "visible": true,
+          "style": "dark",
+          "link": {
+            "type": "action",
+            "target": "quote",
+            "newTab": false
+          }
+        }
+      },
+      "catalog": {
+        "eyebrow": "ASAY ENERGY TAM ÜRÜN KATALOĞU",
+        "title": "Tüm Güç ve Enerji Sistemleri Modelleri",
+        "searchPlaceholder": "Model, güç veya kategori ara...",
+        "footerText": "Tüm sistemlerimiz mühendislik garantili ve anahtar teslim devreye alma kapsamındadır.",
+        "customQuoteLabel": "Özel Proje Teklifi İste"
+      },
+      "quote": {
+        "eyebrow": "HIZLI TEKLİF & GÜÇ KEŞFİ",
+        "title": "Ürün Fiyat Teklifi Al",
+        "submitLabel": "Teklif İste",
+        "successTitle": "Talebiniz Başarıyla Alındı",
+        "enabledCategoryIds": [
+          "jenerator",
+          "buhar-kazani",
+          "trafo",
+          "trijenerasyon",
+          "kojenerasyon",
+          "enerji-depolama"
+        ]
+      },
+      "serviceStyle": {
+        "backgroundImage": "/src/assets/images/facility_engineer_site_1791548168152.jpg",
+        "positionX": 50,
+        "positionY": 50,
+        "overlay": 55
+      },
+      "contact": {
+        "mapImage": "",
+        "mapUrl": "",
+        "mapAlt": "ASAY Energy konumu"
+      },
+      "about": {
+        "eyebrow": "KURUMSAL PROFİL",
+        "title": "Asay Energy Hakkında",
+        "heading": "Yarım asra yaklaşan sanayi tecrübesiyle, kritik altyapıların kesintisiz güç güvencesi.",
+        "description": "Asay Energy, veri merkezleri, modern hastaneler, madencilik sahaları ve ağır sanayi tesisleri için uluslararası standartlarda dizel jeneratör setleri, senkronize paralel güç santralleri ve özel akustik ses izolasyon kabinleri üretmektedir.",
+        "image": "",
+        "highlights": [
+          {
+            "title": "12.000 m² Üretim",
+            "description": "Lazer kesim, robotik kaynak ve elektrostatik toz boya fırınlarına sahip entegre tesis."
+          },
+          {
+            "title": "%100 Yük Testi",
+            "description": "Her jeneratör seti fabrikadan çıkmadan önce dijital yük bankalarında (Load Bank) 4 saat test edilir."
+          },
+          {
+            "title": "Uluslararası Kalite",
+            "description": "ISO 9001:2015, ISO 14001, ISO 45001, CE ve TSE tam uyumluluk sertifikaları."
+          }
+        ],
+        "principlesEyebrow": "MÜHENDİSLİK PRENSİPLERİ",
+        "principlesTitle": "Sıfır Hata ve Kesintisiz Yük Güvenliği",
+        "principlesDescription": "Üretimini yaptığımız tüm jeneratör setlerinde orijinal Avrupa ve global motor markaları ile yüksek kaliteli fırçasız alternatörler kullanılmaktadır.",
+        "ctaLead": "Fabrika Ziyareti ve Saha Keşfi Randevusu",
+        "ctaLabel": "Mühendislerimizle Görüşün",
+        "ctaVisible": true
+      },
+      "buttons": {
+        "defaultStyle": "primary"
+      },
+      "media": {
+        "videoReel": "",
+        "videoPoster": "",
+        "videoAutoplay": false,
+        "videoLoop": true,
+        "videoMuted": true
+      }
+    },
+    "divisions_meta": [
+      {
+        "id": "jenerator",
+        "name": "Jeneratör",
+        "shortName": "Jeneratör Sistemleri",
+        "tagline": "15 kVA – 2500 kVA Dizel & Senkron Güç",
+        "description": "Kabinli dizel, açık şasili, senkronize paralel ve konteyner tipi endüstriyel jeneratör setleri."
+      },
+      {
+        "id": "buhar-kazani",
+        "name": "Buhar Kazanı",
+        "shortName": "Endüstriyel Buhar Kazanları",
+        "tagline": "1.000 – 25.000 kg/h Yüksek Basınç & Isı",
+        "description": "Alev duman borulu, su borulu, kızgın buhar ve yüksek verimli ekonomizerli endüstriyel kazan sistemleri."
+      },
+      {
+        "id": "trafo",
+        "name": "Trafo",
+        "shortName": "Güç & Dağıtım Transformatörleri",
+        "tagline": "50 kVA – 31.5 MVA Yağlı & Kuru Transformatör",
+        "description": "Hermetik yağlı, reçine dökümlü kuru tip, yüksek gerilim güç transformatörleri ve trafo merkezleri."
+      },
+      {
+        "id": "trijenerasyon",
+        "name": "Trijenerasyon",
+        "shortName": "Elektrik + Isı + Soğutma (CCHP)",
+        "tagline": "Tek Yakıtla Üçlü Enerji Üretimi",
+        "description": "Absorpsiyonlu chiller entegrasyonu ile elektrik üretirken açığa çıkan ısıdan aynı anda hem sıcak su hem soğutulmuş su üretimi."
+      },
+      {
+        "id": "kojenerasyon",
+        "name": "Kojenerasyon",
+        "shortName": "Kombine Isı ve Güç Sistemleri (CHP)",
+        "tagline": "Doğalgaz & Biyogaz ile %90+ Verim",
+        "description": "Yerinde elektrik üretimi sağlarken egzoz ve ceket suyundan yüksek basınçlı buhar veya sıcak su geri kazanımı."
+      },
+      {
+        "id": "enerji-depolama",
+        "name": "Enerji Depolama",
+        "shortName": "BESS - Batarya Enerji Depolama",
+        "tagline": "500 kWh – 10 MWh Konteyner LFP Sistemleri",
+        "description": "Lityum Demir Fosfat (LiFePO4) batarya hücreleri, tepe tıraşlama (Peak Shaving), frekans regülasyonu ve GES/RES hibrit entegrasyonu."
+      }
+    ]
+  },
+  "pages": [
+    {
+      "id": "page_home",
+      "slug": "/",
+      "title": "Ana Sayfa",
+      "enabled": true,
+      "sort_order": 0,
+      "seo": {
+        "title": "ASAY Energy | Endüstriyel Güç & Jeneratör Çözümleri",
+        "description": "Endüstriyel Kesintisiz Güç & Enerji Sistemleri",
+        "canonical": "",
+        "ogImage": "",
+        "index": true
+      },
+      "sections": [
+        {
+          "id": "section_hero",
+          "type": "hero",
+          "name": "Hero",
+          "enabled": true,
+          "sort_order": 0,
+          "content": {
+            "spacing": "large",
+            "align": "left",
+            "background": "default"
+          }
+        },
+        {
+          "id": "section_manifesto",
+          "type": "manifesto",
+          "name": "Manifesto",
+          "enabled": true,
+          "sort_order": 1,
+          "content": {
+            "spacing": "large",
+            "align": "left",
+            "background": "default"
+          }
+        },
+        {
+          "id": "section_technical",
+          "type": "technical",
+          "name": "Engineered Power",
+          "enabled": true,
+          "sort_order": 2,
+          "content": {
+            "spacing": "large",
+            "align": "left",
+            "background": "default"
+          }
+        },
+        {
+          "id": "section_products",
+          "type": "products",
+          "name": "Ürünler",
+          "enabled": true,
+          "sort_order": 3,
+          "content": {
+            "spacing": "large",
+            "align": "left",
+            "background": "default"
+          }
+        },
+        {
+          "id": "section_services",
+          "type": "services",
+          "name": "Power Solutions",
+          "enabled": true,
+          "sort_order": 4,
+          "content": {
+            "spacing": "large",
+            "align": "left",
+            "background": "default"
+          }
+        },
+        {
+          "id": "section_projects",
+          "type": "projects",
+          "name": "Projeler",
+          "enabled": true,
+          "sort_order": 5,
+          "content": {
+            "spacing": "large",
+            "align": "left",
+            "background": "default"
+          }
+        },
+        {
+          "id": "section_finalcta",
+          "type": "finalCta",
+          "name": "CTA",
+          "enabled": true,
+          "sort_order": 6,
+          "content": {
+            "spacing": "large",
+            "align": "left",
+            "background": "default"
+          }
+        }
+      ]
+    }
+  ],
+  "menus": [
+    {
+      "id": "menu_header",
+      "menu_key": "header",
+      "name": "Ana Menü",
+      "items": [
+        {
+          "id": "mi_about",
+          "parent_id": null,
+          "label": "Hakkımızda",
+          "enabled": true,
+          "sort_order": 0,
+          "link": {
+            "type": "action",
+            "target": "about"
+          }
+        },
+        {
+          "id": "mi_products",
+          "parent_id": null,
+          "label": "Ürünler",
+          "enabled": true,
+          "sort_order": 1,
+          "link": {
+            "type": "anchor",
+            "target": "products-section"
+          }
+        },
+        {
+          "id": "mi_technology",
+          "parent_id": null,
+          "label": "Teknoloji",
+          "enabled": true,
+          "sort_order": 2,
+          "link": {
+            "type": "anchor",
+            "target": "technical-section"
+          }
+        },
+        {
+          "id": "mi_solutions",
+          "parent_id": null,
+          "label": "Çözümler",
+          "enabled": true,
+          "sort_order": 3,
+          "link": {
+            "type": "anchor",
+            "target": "services-section"
+          }
+        },
+        {
+          "id": "mi_projects",
+          "parent_id": null,
+          "label": "Projeler",
+          "enabled": true,
+          "sort_order": 4,
+          "link": {
+            "type": "anchor",
+            "target": "projects-section"
+          }
+        },
+        {
+          "id": "mi_service",
+          "parent_id": null,
+          "label": "Servis & ATS",
+          "enabled": true,
+          "sort_order": 5,
+          "link": {
+            "type": "anchor",
+            "target": "services-section"
+          }
+        },
+        {
+          "id": "mi_contact",
+          "parent_id": null,
+          "label": "İletişim",
+          "enabled": true,
+          "sort_order": 6,
+          "link": {
+            "type": "action",
+            "target": "contact"
+          }
+        }
+      ]
+    }
+  ],
+  "entities": {
+    "products": [
+      {
+        "id": "p33-diesel",
+        "name": "ASAY P33-PRO Kabinli Dizel",
+        "series": "Endüstriyel Ağır Hizmet Serisi",
+        "standbyPower": "33 kVA / 26.4 kW",
+        "primePower": "30 kVA / 24 kW",
+        "engine": "4 Silindir Su Soğutmalı Ağır Hizmet",
+        "alternator": "Fırçasız 4 Kutuplu 400V/230V",
+        "fuelCapacity": "110 Litre (14 Saat @ %75 Yük)",
+        "noiseLevel": "69 dBA @ 7 Metre",
+        "dimensions": "2100 x 950 x 1450 mm",
+        "weight": "980 kg",
+        "image": "/src/assets/images/hero_generator_transparent.png",
+        "description": "Kompakt işletmeler, telekom baz istasyonları ve ticari binalar için optimize edilmiş süper sessiz dizel jeneratör seti.",
+        "features": [
+          "Otomatik AMF Kontrol",
+          "Ses Yalıtımlı Kabin",
+          "Şasi İçi Yakıt Tankı",
+          "Elektrikli Isıtıcı Ceket"
+        ],
+        "categoryId": "jenerator",
+        "_rowId": "product_p33-diesel",
+        "enabled": true
+      },
+      {
+        "id": "p150-industrial",
+        "name": "ASAY P150-IND Fabrika Serisi",
+        "series": "Mega Sanayi Güç Serisi",
+        "standbyPower": "150 kVA / 120 kW",
+        "primePower": "135 kVA / 108 kW",
+        "engine": "6 Silindir Turbo Intercooler Dizel",
+        "alternator": "H Sınıfı AVR Korumalı Endüstriyel",
+        "fuelCapacity": "380 Litre (12 Saat Kesintisiz)",
+        "noiseLevel": "70 dBA @ 7 Metre",
+        "dimensions": "3300 x 1150 x 1850 mm",
+        "weight": "2150 kg",
+        "image": "/src/assets/images/hero_generator_transparent.png",
+        "description": "Orta ve büyük ölçekli fabrikalar, üretim hatları ve soğuk hava depoları için yüksek torklu güç çözümü.",
+        "features": [
+          "SCADA Uzaktan İzleme",
+          "Motorlu Şalter Çıkışı",
+          "Çift Kademeli Susturucu",
+          "Akü Şarj Redresörü"
+        ],
+        "categoryId": "jenerator",
+        "_rowId": "product_p150-industrial",
+        "enabled": true
+      },
+      {
+        "id": "p500-hospital",
+        "name": "ASAY P500-MED Kritik Güç",
+        "series": "Hassas Tesis & Hastane Serisi",
+        "standbyPower": "500 kVA / 400 kW",
+        "primePower": "450 kVA / 360 kW",
+        "engine": "Elektronik Enjeksiyonlu V12 Ağır Sanayi",
+        "alternator": "PMÜ Uyarım Destekli Yüksek Kararlı",
+        "fuelCapacity": "950 Litre (Harici Pompalı)",
+        "noiseLevel": "67 dBA @ 7 Metre (Ultra Akustik)",
+        "dimensions": "4500 x 1600 x 2250 mm",
+        "weight": "4850 kg",
+        "image": "/src/assets/images/hero_generator_transparent.png",
+        "description": "Şehir hastaneleri ve yoğun bakım üniteleri için sıfır toleranslı, anlık yüklenmeye anında cevap veren yüksek kararlılık jeneratörü.",
+        "features": [
+          "10 Saniyede %100 Yük Kabulü",
+          "Özel Hastane Akustik Kabini",
+          "Yedekli Kontrol Kartı",
+          "Biyodizel Uyumluluğu"
+        ],
+        "categoryId": "jenerator",
+        "_rowId": "product_p500-hospital",
+        "enabled": true
+      },
+      {
+        "id": "p1250-datacenter",
+        "name": "ASAY P1250-DC Veri Merkezi",
+        "series": "Tier IV Veri Merkezi Güç Santrali",
+        "standbyPower": "1250 kVA / 1000 kW",
+        "primePower": "1125 kVA / 900 kW",
+        "engine": "16 Silindir Common Rail Elektronik Dizel",
+        "alternator": "Dijital Voltaj Regülasyonlu 11kV / 400V",
+        "fuelCapacity": "2200 Litre Çift Cidarlı",
+        "noiseLevel": "72 dBA @ 7 Metre Konteyner Tipi",
+        "dimensions": "6058 x 2438 x 2591 mm (20ft ISO Konteyner)",
+        "weight": "11200 kg",
+        "image": "/src/assets/images/hero_generator_transparent.png",
+        "description": "Bulut altyapıları ve hyperscale veri merkezleri için N+1 veya 2N senkron çalışmaya hazır konteyner tipi jeneratör istasyonu.",
+        "features": [
+          "Konteyner İçi Yangın Söndürme",
+          "Otomatik Paralelleme & Yük Paylaşımı",
+          "Dahili Servis Odası",
+          "Düşük Emisyon"
+        ],
+        "categoryId": "jenerator",
+        "_rowId": "product_p1250-datacenter",
+        "enabled": true
+      },
+      {
+        "id": "steam-3000",
+        "name": "ASAY STM-3000 Alev Borulu Buhar Kazanı",
+        "series": "Endüstriyel 3 Geçişli İskoç Tipi",
+        "standbyPower": "3.000 kg/h Buhar Kapasitesi",
+        "primePower": "2.093 kW Isıl Güç",
+        "engine": "Modülasyonlu Doğalgaz / Motorin Brülörü",
+        "alternator": "%94.8 Termal Verim (Ekonomizerli)",
+        "fuelCapacity": "16 Bar İşletme Basıncı",
+        "noiseLevel": "68 dBA (Akustik Brülör Kapaklı)",
+        "dimensions": "4200 x 2100 x 2500 mm",
+        "weight": "6200 kg (Boş)",
+        "image": "/src/assets/images/boiler_steam_unit_1791552428866.jpg",
+        "description": "Tekstil, kimya, gıda ve ilaç sanayii için yüksek buhar kalitesine sahip 3 geçişli alev duman borulu buhar kazanı.",
+        "features": [
+          "Otomatik Blöf Sistemi",
+          "PLC Dokunmatik Kontrol Paneli",
+          "Entegre Ekonomizer",
+          "Çift Yaylı Emniyet Ventili"
+        ],
+        "categoryId": "buhar-kazani",
+        "_rowId": "product_steam-3000",
+        "enabled": true
+      },
+      {
+        "id": "steam-8000",
+        "name": "ASAY STM-8000 Kızgın Buhar Santrali",
+        "series": "Ağır Sanayi Süperkızdırıcılı Seri",
+        "standbyPower": "8.000 kg/h Kızgın Buhar",
+        "primePower": "5.580 kW Isıl Güç",
+        "engine": "Elektronik Kamlı Çok Yakıtlı Brülör",
+        "alternator": "%95.5 Yüksek Isı Geri Kazanımı",
+        "fuelCapacity": "25 Bar Yüksek Basınç",
+        "noiseLevel": "70 dBA",
+        "dimensions": "6500 x 2800 x 3200 mm",
+        "weight": "14500 kg",
+        "image": "/src/assets/images/boiler_steam_unit_1791552428866.jpg",
+        "description": "Rafineriler, enerji santralleri ve kağıt fabrikaları için kızgın buhar üreten yüksek güvenlikli basınçlı kap tasarımı.",
+        "features": [
+          "Süperkızdırıcı Entegrasyonu",
+          "O2 Trimi Yanma Optimizasyonu",
+          "Otomatik Seviye Kontrolü",
+          "SCADA Bağlantısı"
+        ],
+        "categoryId": "buhar-kazani",
+        "_rowId": "product_steam-8000",
+        "enabled": true
+      },
+      {
+        "id": "steam-compact",
+        "name": "ASAY STM-COMPACT Buhar Jeneratörü",
+        "series": "Hızlı Buhar Üreten Kompakt Seri",
+        "standbyPower": "1.200 kg/h Buhar Üretimi",
+        "primePower": "837 kW Isıl Güç",
+        "engine": "Yüksek Hızlı Spiral Serpantinli",
+        "alternator": "3 Dakikada Buhar Rejimi",
+        "fuelCapacity": "10 Bar Basınç",
+        "noiseLevel": "65 dBA",
+        "dimensions": "2200 x 1400 x 1900 mm",
+        "weight": "2100 kg",
+        "image": "/src/assets/images/boiler_steam_unit_1791552428866.jpg",
+        "description": "Küçük ve orta işletmeler için patlama riski olmayan, açıldıktan 3 dakika sonra doymuş buhar veren modüler sistem.",
+        "features": [
+          "Su Hacimsiz Serpantinli Gövde",
+          "Düşük NOx Yanma",
+          "Kireç Önleyici Manyetik Arıtma",
+          "Kompakt Şasi"
+        ],
+        "categoryId": "buhar-kazani",
+        "_rowId": "product_steam-compact",
+        "enabled": true
+      },
+      {
+        "id": "tr-herm-1600",
+        "name": "ASAY TR-HERM 1600 kVA Hermetik Yağlı",
+        "series": "Ecodesign Tier 2 Düşük Kayıplı Seri",
+        "standbyPower": "1600 kVA Güç Kapasitesi",
+        "primePower": "34.5 kV / 0.4 kV Giriş-Çıkış",
+        "engine": "Mineral Yağlı Genleşme Deposuz Dalga Duvarlı",
+        "alternator": "Bakır/Alüminyum Folyo Sargı",
+        "fuelCapacity": "ONAN Doğal Yağ/Hava Soğutma",
+        "noiseLevel": "58 dBA Ultra Sessiz",
+        "dimensions": "2150 x 1450 x 1950 mm",
+        "weight": "4350 kg (Yağ Dahil)",
+        "image": "/src/assets/images/transformer_power_1791552441601.jpg",
+        "description": "Organize sanayi bölgeleri ve dağıtım şebekeleri için atmosferle temassız, bakım gerektirmeyen hermetik trafo.",
+        "features": [
+          "Hermetik Basınç Emniyet Cihazı",
+          "Manyetik Yağ Seviye Göstergesi",
+          "Buchholz Rölesi Opsiyonu",
+          "Korozyona Dayanıklı Boya"
+        ],
+        "categoryId": "trafo",
+        "_rowId": "product_tr-herm-1600",
+        "enabled": true
+      },
+      {
+        "id": "tr-cast-2500",
+        "name": "ASAY TR-CAST 2500 kVA Dökme Reçine Kuru",
+        "series": "F Sınıfı Yanmaz Kuru Tip Trafo",
+        "standbyPower": "2500 kVA Güç Kapasitesi",
+        "primePower": "36 kV / 400 V Dağıtım",
+        "engine": "Vakum Altında Dökülmüş Epoksi Reçine",
+        "alternator": "IP31 / IP54 Muhafazalı Kabin",
+        "fuelCapacity": "AN / AF Cebri Fanlı Soğutma (+%40 Kapasite)",
+        "noiseLevel": "62 dBA",
+        "dimensions": "2600 x 1650 x 2300 mm",
+        "weight": "6900 kg",
+        "image": "/src/assets/images/transformer_power_1791552441601.jpg",
+        "description": "Hastaneler, gökdelenler, AVM ve veri merkezleri gibi yangın riski kabul edilemez kapalı alanlar için sıfır yangın riskli kuru trafo.",
+        "features": [
+          "PT100 Sıcaklık Sensörleri",
+          "Kendiliğinden Sönen Reçine",
+          "Deprem & Titreşim Dayanımı",
+          "Çevre Dostu"
+        ],
+        "categoryId": "trafo",
+        "_rowId": "product_tr-cast-2500",
+        "enabled": true
+      },
+      {
+        "id": "tr-power-10mva",
+        "name": "ASAY TR-POWER 10 MVA Güç Trafosu",
+        "series": "Yüksek Gerilim İletim & Trafo Merkezi",
+        "standbyPower": "10 MVA / 10.000 kVA",
+        "primePower": "36 kV / 10.5 kV / 6.3 kV",
+        "engine": "ONAF Cebri Radyatör Fanlı Soğutma",
+        "alternator": "Yük Altında Kademe Değiştiricili (OLTC)",
+        "fuelCapacity": "Harici Genleşme Deposu & Nem Alıcı",
+        "noiseLevel": "65 dBA",
+        "dimensions": "4800 x 3100 x 3800 mm",
+        "weight": "24500 kg",
+        "image": "/src/assets/images/transformer_power_1791552441601.jpg",
+        "description": "Ağır sanayi tesisleri ve rüzgar/güneş santralleri bağlantıları için şebeke iletim seviyesi yüksek gerilim güç transformatörü.",
+        "features": [
+          "Yük Altında Otomatik Kademe",
+          "Çift Şamandıralı Buchholz",
+          "Sargı Sıcaklık Göstergeleri",
+          "SCADA RTU Uyumu"
+        ],
+        "categoryId": "trafo",
+        "_rowId": "product_tr-power-10mva",
+        "enabled": true
+      },
+      {
+        "id": "tri-1200",
+        "name": "ASAY TRI-1200 Entegre Trijen Santrali",
+        "series": "Absorpsiyonlu Chiller Kombine Sistem",
+        "standbyPower": "1200 kWe Elektrik Gücü",
+        "primePower": "1450 kWt Isı + 1100 kWc Soğutma",
+        "engine": "Yüksek Verimli Doğalgaz Motoru",
+        "alternator": "%91.2 Toplam Tesis Verimliliği",
+        "fuelCapacity": "LiBr Absorpsiyonlu Chiller Entegre",
+        "noiseLevel": "68 dBA Ses İzolasyon Kabinli",
+        "dimensions": "12192 x 2438 x 2896 mm (Konteyner)",
+        "weight": "19800 kg",
+        "image": "/src/assets/images/cogeneration_unit_1791552452294.jpg",
+        "description": "Yaz aylarında proses ve iklimlendirme soğutması, kış aylarında fabrika ısıtması sağlarken kesintisiz elektrik üreten üçlü santral.",
+        "features": [
+          "Absorpsiyonlu Soğutma Ünitesi",
+          "Egzoz Gazı Isı Geri Kazanımı",
+          "Düşük Karbon Emisyonu",
+          "Amortisman Süresi 2.5 Yıl"
+        ],
+        "categoryId": "trijenerasyon",
+        "_rowId": "product_tri-1200",
+        "enabled": true
+      },
+      {
+        "id": "tri-2000",
+        "name": "ASAY TRI-2000 Veri Merkezi & Kampüs",
+        "series": "Mega Trijenerasyon Güç Bloğu",
+        "standbyPower": "2000 kWe Elektrik Çıkışı",
+        "primePower": "2300 kWt Isı + 1850 kWc Soğuk Su",
+        "engine": "Elektronik Yanmalı V16 Gaz Motoru",
+        "alternator": "%92.5 Bileşik Sistem Verimi",
+        "fuelCapacity": "7/12°C Soğutulmuş Su Beslemesi",
+        "noiseLevel": "70 dBA",
+        "dimensions": "14500 x 3000 x 3200 mm",
+        "weight": "28500 kg",
+        "image": "/src/assets/images/cogeneration_unit_1791552452294.jpg",
+        "description": "Büyük ölçekli veri merkezleri ve hastaneler için elektrik tüketirken eşzamanlı olarak devasa soğutma kapasitesi sağlayan anahtar teslim çözüm.",
+        "features": [
+          "Otomatik Yük Modülasyonu",
+          "Çift Yakıt Uyumluluğu",
+          "SCADA Enerji İzleme",
+          "Yüksek Güvenilirlik"
+        ],
+        "categoryId": "trijenerasyon",
+        "_rowId": "product_tri-2000",
+        "enabled": true
+      },
+      {
+        "id": "chp-1000",
+        "name": "ASAY CHP-1000 Doğalgaz Motorlu Kojenerasyon",
+        "series": "Endüstriyel Isı Geri Kazanım Santrali",
+        "standbyPower": "1000 kWe Elektrik Gücü",
+        "primePower": "1250 kWt Termal Isı Gücü",
+        "engine": "Ağır Hizmet Yağ Soğutmalı Gaz Motoru",
+        "alternator": "%89.8 Toplam Enerji Verimi",
+        "fuelCapacity": "Doğalgaz / LNG / CNG Yakıtlı",
+        "noiseLevel": "69 dBA",
+        "dimensions": "8500 x 2400 x 2700 mm",
+        "weight": "14200 kg",
+        "image": "/src/assets/images/cogeneration_unit_1791552452294.jpg",
+        "description": "Sürekli ısı ve elektrik tüketen seralar, oteller, gıda fabrikaları ve seramik tesisleri için kendi enerjisini üreten kojeneratör.",
+        "features": [
+          "Plakalı ve Borulu Eşanjörler",
+          "Buhar Kazanı Besleme Suyu Ön Isıtma",
+          "Oksidasyon Katalizörü",
+          "Ada Modu Senkronizasyonu"
+        ],
+        "categoryId": "kojenerasyon",
+        "_rowId": "product_chp-1000",
+        "enabled": true
+      },
+      {
+        "id": "chp-bio-1200",
+        "name": "ASAY CHP-BIO Biyogaz Güç Santrali",
+        "series": "Yenilenebilir Biyokütle & Çöp Gazı Serisi",
+        "standbyPower": "1200 kWe Yenilenebilir Elektrik",
+        "primePower": "1350 kWt Fermantasyon Isı Desteği",
+        "engine": "Korozyona Dayanıklı Biyogaz Motoru",
+        "alternator": "H2S ve Siloksan Filtre Uyumlu",
+        "fuelCapacity": "Biyogaz / Çöp Gazı (LFG)",
+        "noiseLevel": "71 dBA",
+        "dimensions": "9200 x 2400 x 2800 mm",
+        "weight": "16800 kg",
+        "image": "/src/assets/images/cogeneration_unit_1791552452294.jpg",
+        "description": "Arıtma tesisleri, çiftlik biyogaz reaktörleri ve katı atık depolama alanları için atık gazdan temiz enerji ve ısı üreten santral.",
+        "features": [
+          "Gaz Şartlandırma & Nem Alma",
+          "Paslanmaz Isı Eşanjörü",
+          "Düşük Emisyon Brülör Yanması",
+          "Şebeke Satış Otomasyonu"
+        ],
+        "categoryId": "kojenerasyon",
+        "_rowId": "product_chp-bio-1200",
+        "enabled": true
+      },
+      {
+        "id": "bess-1000",
+        "name": "ASAY BESS-1000 Şebeke Destekli Konteyner",
+        "series": "20ft ISO LFP Batarya Enerji Depolama",
+        "standbyPower": "1000 kW Güç / 2000 kWh Kapasite",
+        "primePower": "0.5C / 1C Şarj-Deşarj Oranı",
+        "engine": "LiFePO4 (LFP) Prizmatik Hücreler",
+        "alternator": "%92 Çevrim İçi Sistem Verimliliği",
+        "fuelCapacity": "6000+ Çevrim Ömrü (%80 EOL)",
+        "noiseLevel": "65 dBA (Sıvı Soğutmalı Chiller)",
+        "dimensions": "6058 x 2438 x 2896 mm (20ft)",
+        "weight": "21000 kg",
+        "image": "/src/assets/images/bess_battery_storage_1791552461835.jpg",
+        "description": "Fabrikalarda elektrik tarifelerinin pahalı olduğu tepe saatlerde devreye girerek elektrik faturasını düşüren ve kesintiyi önleyen BESS istasyonu.",
+        "features": [
+          "Sıvı Soğutmalı Batarya Modülleri",
+          "Aerosol & Gaz Yangın Söndürme",
+          "Akıllı EMS/BMS Yönetim Yazılımı",
+          "Şebekeden Bağımsız Ada Modu"
+        ],
+        "categoryId": "enerji-depolama",
+        "_rowId": "product_bess-1000",
+        "enabled": true
+      },
+      {
+        "id": "bess-2500",
+        "name": "ASAY BESS-2500 Utility-Scale Depolama",
+        "series": "40ft Yüksek Gerilim Şebeke Dengeleme",
+        "standbyPower": "2500 kW Güç / 5000 kWh Kapasite",
+        "primePower": "HV 1500V DC Sistem Mimarisi",
+        "engine": "Tier-1 Otomotiv Kalite LFP Hücreler",
+        "alternator": "Dört Bölgeli Reaktif Güç Desteği",
+        "fuelCapacity": "15 Yıl Tasarım Ömrü",
+        "noiseLevel": "68 dBA",
+        "dimensions": "12192 x 2438 x 2896 mm (40ft)",
+        "weight": "44000 kg",
+        "image": "/src/assets/images/bess_battery_storage_1791552461835.jpg",
+        "description": "Güneş (GES) ve Rüzgar (RES) santrallerinin iletim şebekesine dengeli enerji vermesini sağlayan dev depolama ünitesi.",
+        "features": [
+          "1500V PCS Çift Yönlü İnverter",
+          "Modüler Raf Mimarisi",
+          "Gelişmiş Termal Yönetim",
+          "Frekans ve Gerilim Regülasyonu"
+        ],
+        "categoryId": "enerji-depolama",
+        "_rowId": "product_bess-2500",
+        "enabled": true
+      }
+    ],
+    "projects": [
+      {
+        "id": "datacenter",
+        "title": "Hyperscale Veri Merkezi Güç Kampüsü",
+        "category": "Veri Merkezi / Data Center",
+        "capacity": "6 x 2000 kVA Senkron Sistem",
+        "location": "İstanbul, Türkiye",
+        "year": "2025",
+        "image": "/src/assets/images/project_datacenter_1791548180269.jpg",
+        "description": "Tier III standardında çalışan 12 MW kritik IT yükü için 6 jeneratörlü otomatik yük paylaşımlı paralel enerji santrali kurulumu.",
+        "_rowId": "project_datacenter",
+        "enabled": true
+      },
+      {
+        "id": "hospital",
+        "title": "Bölge Şehir Hastanesi Kritik Yedek Güç",
+        "category": "Sağlık & Hastane Kompleksi",
+        "capacity": "4 x 1600 kVA Yedek Güç",
+        "location": "Ankara, Türkiye",
+        "year": "2024",
+        "image": "/src/assets/images/project_hospital_1791548192579.jpg",
+        "description": "1.200 yataklı şehir hastanesi ameliyathane ve yoğun bakım üniteleri için 0.9 saniyede kesintisiz devreye giren akustik kabinli jeneratör altyapısı.",
+        "_rowId": "project_hospital",
+        "enabled": true
+      },
+      {
+        "id": "factory",
+        "title": "Ağır Sanayi & Otomotiv Üretim Tesisi",
+        "category": "Endüstriyel Üretim Tesisi",
+        "capacity": "3 x 1250 kVA Kesintisiz Şebeke Destek",
+        "location": "Kocaeli, Türkiye",
+        "year": "2024",
+        "image": "/src/assets/images/project_industrial_plant_1791548204186.jpg",
+        "description": "Robotik pres ve montaj hatlarının voltaj dalgalanmalarından etkilenmeden ada modunda (Island Mode) çalışmasını sağlayan hibrit çözüm.",
+        "_rowId": "project_factory",
+        "enabled": true
+      },
+      {
+        "id": "mining",
+        "title": "Yüksek İrtifa Maden & Saha İstasyonu",
+        "category": "Zorlu Saha & Madencilik",
+        "capacity": "2 x 1000 kVA Ağır Saha Kabini",
+        "location": "Erzincan, Türkiye",
+        "year": "2023",
+        "image": "/src/assets/images/facility_engineer_site_1791548168152.jpg",
+        "description": "2200 metre irtifada -30°C dondurucu soğuk ve yoğun tozlu maden sahasında kesintisiz çalışan özel filtreli konteyner jeneratör seti.",
+        "_rowId": "project_mining",
+        "enabled": true
+      }
+    ],
+    "services": [
+      {
+        "number": "01",
+        "title": "Güç Keşfi & Mühendislik",
+        "subtitle": "Power Solutions",
+        "description": "Uzman mühendislerimiz saha analizleri ve harmonik ölçümlerle tesisiniz için en doğru kVA güç kapasitesini ve senkronizasyon mimarisini projelendirir.",
+        "iconName": "Activity",
+        "id": "service-1",
+        "_rowId": "service_1",
+        "enabled": true
+      },
+      {
+        "number": "02",
+        "title": "Anahtar Teslim Projeler",
+        "subtitle": "Turnkey Projects",
+        "description": "Beton kaide hazırlığından havalandırma kanallarına, egzoz borulamalarından şebeke senkron panolarına kadar tüm kurulumu eksiksiz teslim ediyoruz.",
+        "iconName": "Layers",
+        "id": "service-2",
+        "_rowId": "service_2",
+        "enabled": true
+      },
+      {
+        "number": "03",
+        "title": "7/24 Mobil Teknik Servis",
+        "subtitle": "Technical Service",
+        "description": "Tam donanımlı mobil saha müdahale araçlarımızla Türkiye genelinde ve bölge ülkelerinde kesintisiz 24 saat yerinde teknik müdahale sağlıyoruz.",
+        "iconName": "Wrench",
+        "id": "service-3",
+        "_rowId": "service_3",
+        "enabled": true
+      },
+      {
+        "number": "04",
+        "title": "Periyodik Bakım & Yedek Parça",
+        "subtitle": "Maintenance & Spares",
+        "description": "Orijinal filtreler, yağ analizleri, yük bankası (Load Bank) testleri ve garantili orijinal yedek parça stoğu ile sistem ömrünü uzatıyoruz.",
+        "iconName": "ShieldCheck",
+        "id": "service-4",
+        "_rowId": "service_4",
+        "enabled": true
+      }
+    ],
+    "hotspots": [
+      {
+        "id": "alternator",
+        "title": "Alternatör Sistemi",
+        "subtitle": "Yüksek Verimli Fırçasız Tip",
+        "badge": "Verim: %95.2",
+        "description": "H sınıfı izolasyon, IP23 koruma standardı ve dijital AVR voltaj regülatörü ile hassas yüklerde dalgalanmasız kararlı frekans.",
+        "position": {
+          "x": 22,
+          "y": 38
+        },
+        "side": "left",
+        "_rowId": "hotspot_alternator",
+        "enabled": true
+      },
+      {
+        "id": "engine",
+        "title": "Ağır Hizmet Dizel Motor",
+        "subtitle": "Endüstriyel Turboşarjlı",
+        "badge": "Tier 3 / Stage V Uyumlu",
+        "description": "Zorlu iklim koşullarında 1500 rpm kesintisiz çalışma. Düşük spesifik yakıt tüketimi ve ağır iş döngüsüne dayanıklı çelik krank mili.",
+        "position": {
+          "x": 32,
+          "y": 68
+        },
+        "side": "left",
+        "_rowId": "hotspot_engine",
+        "enabled": true
+      },
+      {
+        "id": "canopy",
+        "title": "Akustik Ses İzolasyonu",
+        "subtitle": "Galvanizli Modüler Kabin",
+        "badge": "68 dBA @ 7 Metre",
+        "description": "Yanmaz mineral yün dolgulu ses bariyerleri, elektrostatik korozyon önleyici toz boya ve kilitlenebilir bakım kapakları.",
+        "position": {
+          "x": 26,
+          "y": 84
+        },
+        "side": "left",
+        "_rowId": "hotspot_canopy",
+        "enabled": true
+      },
+      {
+        "id": "controller",
+        "title": "Akıllı Dijital Kontrol Ünitesi",
+        "subtitle": "Mikroişlemcili SCADA / AMF",
+        "badge": "0.8s Şebeke Algılama",
+        "description": "Ethernet, Modbus ve 4G uzaktan izleme modülü ile anlık yük izleme, otomatik senkronizasyon ve arıza erken uyarı sistemi.",
+        "position": {
+          "x": 74,
+          "y": 32
+        },
+        "side": "right",
+        "_rowId": "hotspot_controller",
+        "enabled": true
+      },
+      {
+        "id": "fuel",
+        "title": "Entegre Şasi İçi Yakıt Tankı",
+        "subtitle": "Çift Cidarlı Güvenlik",
+        "badge": "12 Saat Kesintisiz Yakıt",
+        "description": "Şasiye entegre sızıntı sensörlü yakıt deposu, mekanik seviye göstergesi ve harici otomatik yakıt ikmal pompası bağlantısı.",
+        "position": {
+          "x": 78,
+          "y": 62
+        },
+        "side": "right",
+        "_rowId": "hotspot_fuel",
+        "enabled": true
+      },
+      {
+        "id": "ats",
+        "title": "Otomatik Transfer Panosu (ATS)",
+        "subtitle": "Motorlu Komütatör Şalter",
+        "badge": "Milisaniyelik Geçiş",
+        "description": "Şebeke enerjisi kesildiğinde anında jeneratöre, şebeke geri geldiğinde kesintisiz geri dönüşü sağlayan akıllı transfer ünitesi.",
+        "position": {
+          "x": 70,
+          "y": 84
+        },
+        "side": "right",
+        "_rowId": "hotspot_ats",
+        "enabled": true
+      }
+    ]
+  }
+}
