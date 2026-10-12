@@ -16,17 +16,41 @@
 <body class="bg-[var(--theme-background)] text-[var(--theme-text)] antialiased selection:bg-[var(--theme-accent)] selection:text-white">
   <div id="root"><div style="min-height:100vh;display:grid;place-items:center;font-family:Arial,sans-serif">ASAY Energy yükleniyor…</div></div>
   <script>
-    // Preview branch: keep the existing frontend intact, but source CMS product data from Supabase.
     (() => {
       const nativeFetch = window.fetch.bind(window);
-      const contentUrl = 'https://latzbhygurlwvhuduyhx.supabase.co/functions/v1/asay-energy-content';
-      window.fetch = (input, init) => {
-        const url = typeof input === 'string' ? input : input?.url;
-        if (url === '/api/content' || url?.endsWith('/api/content')) return nativeFetch(contentUrl, init);
+      const edgeBase = 'https://latzbhygurlwvhuduyhx.supabase.co/functions/v1';
+      const contentUrl = edgeBase + '/asay-energy-content';
+      const adminUrl = edgeBase + '/asay-energy-admin';
+      const publicUrl = edgeBase + '/asay-energy-public';
+
+      window.fetch = (input, init = {}) => {
+        const raw = typeof input === 'string' ? input : input?.url;
+        if (!raw) return nativeFetch(input, init);
+        const u = new URL(raw, window.location.origin);
+
+        if (u.pathname === '/api/content') {
+          return nativeFetch(contentUrl, init);
+        }
+
+        if (u.pathname.startsWith('/api/admin/')) {
+          const route = u.pathname.replace(/^\/api\//, '');
+          const target = new URL(adminUrl);
+          target.searchParams.set('route', route);
+          u.searchParams.forEach((v, k) => target.searchParams.append(k, v));
+          return nativeFetch(target.toString(), init);
+        }
+
+        if (u.pathname === '/api/quotes' || u.pathname === '/api/contact' || u.pathname === '/api/translate/batch') {
+          const route = u.pathname.replace(/^\/api\//, '');
+          const target = new URL(publicUrl);
+          target.searchParams.set('route', route);
+          return nativeFetch(target.toString(), init);
+        }
+
         return nativeFetch(input, init);
       };
     })();
   </script>
-  <script type="module" src="/assets/app.js?v=studio-3-7-reference"></script>
+  <script type="module" src="/assets/app.js?v=studio-3-7-admin-live"></script>
 </body>
 </html>
