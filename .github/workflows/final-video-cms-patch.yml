@@ -1,0 +1,95 @@
+name: Final Multi Video CMS Patch
+
+on:
+  push:
+    branches: [supabase-live-preview]
+    paths:
+      - '.github/workflows/final-video-cms-patch.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: supabase-live-preview
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Apply final CMS patch
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          p=Path('js/AdminUnifiedPanels.js'); s=p.read_text(); start=s.index('export function VideoPanel')
+          new=r'''export function VideoPanel({site,setSite,MediaField}){
+           const existing=Array.isArray(get(site,'media.heroVideos',null))?get(site,'media.heroVideos',[]):[];
+           const legacy={id:'video_legacy',title:get(site,'hero.videoTitle','Saha Test Videosunu İzle'),subtitle:get(site,'hero.videoSubtitle','Fabrika Yük Testi (Load Bank Test)'),video:get(site,'media.videoReel',''),poster:get(site,'media.videoPoster',''),visible:get(site,'media.videoEnabled',true)!==false,autoplay:!!get(site,'media.videoAutoplay',false),loop:get(site,'media.videoLoop',true)!==false,muted:get(site,'media.videoMuted',true)!==false,sortOrder:0};
+           const videos=existing.length?existing:[legacy];
+           const setVideos=(next)=>setSite('media.heroVideos',next.map((x,i)=>({...x,sortOrder:i})));
+           const patch=(i,data)=>{const n=[...videos];n[i]={...n[i],...data};setVideos(n)};
+           const add=()=>setVideos([...videos,{id:`video_${Date.now().toString(36)}`,title:'Yeni Video',subtitle:'',video:'',poster:'',visible:false,autoplay:false,loop:true,muted:true,sortOrder:videos.length}]);
+           const remove=i=>{if(confirm('Bu video kartı silinsin mi?'))setVideos(videos.filter((_,x)=>x!==i))};
+           const move=(i,d)=>{const j=i+d;if(j<0||j>=videos.length)return;const n=[...videos];[n[i],n[j]]=[n[j],n[i]];setVideos(n)};
+           return h('div',null,
+            h(Card,{title:'Hero Görünürlük',sub:'Giriş ekranındaki P33 bilgi kartını ve hero video kartlarını yönetin.',actions:BTN('+ Yeni Video',add,'bg-black text-white')},h('div',{className:'space-y-5'},
+             h('div',{className:'rounded-xl border p-4 space-y-3'},h(Toggle,{label:'“P33-PRO / YÜKSEK PERFORMANS” kartını göster',value:get(site,'hero.badgeVisible',true)!==false,onChange:v=>setSite('hero.badgeVisible',v)}),h('div',{className:'grid md:grid-cols-2 gap-3'},h(Field,{label:'P33 Kart Başlığı',value:get(site,'hero.badgeTitle','P33-PRO / YÜKSEK PERFORMANS'),onChange:v=>setSite('hero.badgeTitle',v)}),h(Field,{label:'Kart Link Yazısı',value:get(site,'hero.badgeLink','Teknik Şartnameyi İncele'),onChange:v=>setSite('hero.badgeLink',v)})),h(Field,{label:'Kart Açıklaması',area:true,value:get(site,'hero.badgeDescription',''),onChange:v=>setSite('hero.badgeDescription',v)})),
+             h('div',{className:'rounded-xl bg-neutral-50 border p-3 text-xs text-black/55'},'Video kartları index sayfasında sol altta üst üste sıralanır. Her kartın kendi “Göster” kutucuğu vardır. İşaretli olmayan kart frontend’de hiç render edilmez.')
+            )),
+            ...videos.map((v,i)=>h(Card,{key:v.id||i,title:`Video ${i+1} · ${v.title||'Başlıksız'}`,sub:v.visible===false?'Gizli · Sitede görünmez':'Gösteriliyor · Sitede görünür',actions:h('div',{className:'flex flex-wrap gap-2'},BTN('↑',()=>move(i,-1)),BTN('↓',()=>move(i,1)),BTN('Çıkart',()=>remove(i),'text-red-600'))},
+             h('div',{className:'space-y-4'},
+              h('div',{className:'flex items-center justify-between gap-3 rounded-xl border bg-neutral-50 p-3'},h('div',null,h('b',{className:'text-sm'},'Kart Görünürlüğü'),h('p',{className:'text-xs text-black/45 mt-1'},'Kapalıysa hero alanında bu video kartı hiç görünmez.')),h(Toggle,{label:'Göster',value:v.visible!==false,onChange:x=>patch(i,{visible:x})})),
+              h('div',{className:'grid md:grid-cols-2 gap-4'},h(Field,{label:'Video Başlığı',value:v.title||'',onChange:x=>patch(i,{title:x})}),h(Field,{label:'Video Alt Başlığı',value:v.subtitle||'',onChange:x=>patch(i,{subtitle:x})}),h(MediaField,{l:'Video Dosyası',v:v.video||'',set:x=>patch(i,{video:x}),video:true}),h(MediaField,{l:'Poster',v:v.poster||'',set:x=>patch(i,{poster:x})})),
+              h('div',{className:'flex flex-wrap gap-5'},h(Toggle,{label:'Otomatik oynat',value:!!v.autoplay,onChange:x=>patch(i,{autoplay:x})}),h(Toggle,{label:'Döngü',value:v.loop!==false,onChange:x=>patch(i,{loop:x})}),h(Toggle,{label:'Sessiz başlat',value:v.muted!==false,onChange:x=>patch(i,{muted:x})}))
+             )
+            ))
+           );
+          }
+          '''
+          s=s[:start]+new+'\n'; p.write_text(s)
+
+          p=Path('js/components/Hero.js'); s=p.read_text()
+          needle='    return (_jsxs("section", { ref: heroRef'
+          insert="""    const configuredHeroVideos = cmsValue('media.heroVideos', null);\n    const heroVideos = Array.isArray(configuredHeroVideos) && configuredHeroVideos.length\n        ? configuredHeroVideos.filter((item) => item && item.visible !== false).sort((a, b) => Number(a.sortOrder ?? 0) - Number(b.sortOrder ?? 0))\n        : (cmsValue('media.videoEnabled', true) !== false ? [{ id: 'video_legacy', title: cmsContent.videoTitle || cmsValue('hero.videoTitle', 'Saha Test Videosunu İzle'), subtitle: cmsContent.videoSubtitle || cmsValue('hero.videoSubtitle', 'Fabrika Yük Testi (Load Bank Test)'), video: cmsValue('media.videoReel', ''), poster: cmsValue('media.videoPoster', ''), autoplay: cmsValue('media.videoAutoplay', false), loop: cmsValue('media.videoLoop', true), muted: cmsValue('media.videoMuted', true), visible: true, sortOrder: 0 }] : []);\n"""
+          assert needle in s
+          s=s.replace(needle,insert+needle,1)
+          old="""children: [cmsValue('media.videoEnabled', true) !== false ? _jsxs(\"button\", { onClick: onOpenVideoReel, className: \"flex items-center gap-3 group cursor-pointer\", children: [_jsx(\"div\", { className: \"w-10 h-10 rounded-full bg-[var(--theme-surface)] border border-neutral-300 flex items-center justify-center text-[var(--theme-primary)] shadow-sm group-hover:scale-110 group-hover:bg-[var(--theme-primary)] group-hover:text-white transition-all duration-300\", children: _jsx(Play, { className: \"w-4 h-4 fill-current ml-0.5\" }) }), _jsxs(\"div\", { className: \"flex flex-col text-left\", children: [_jsx(\"span\", { className: \"text-xs font-bold text-[var(--theme-text)] group-hover:text-[var(--theme-primary)] transition-colors\", children: cmsContent.videoTitle || cmsValue('hero.videoTitle', 'Saha Test Videosunu İzle') }), _jsx(\"span\", { className: \"text-[10px] text-neutral-400 font-medium\", children: cmsContent.videoSubtitle || cmsValue('hero.videoSubtitle', 'Fabrika Yük Testi (Load Bank Test)') })] })] }) : _jsx('div', {}),"""
+          new2="""children: [_jsx(\"div\", { className: \"flex flex-col items-start gap-2 max-w-[310px]\", children: heroVideos.map((item, idx) => _jsxs(\"button\", { onClick: () => onOpenVideoReel(item), className: \"flex items-center gap-3 group cursor-pointer rounded-xl bg-[var(--theme-surface)]/80 backdrop-blur-sm border border-transparent hover:border-[var(--theme-border)] px-2 py-1.5 transition-all\", children: [_jsx(\"div\", { className: \"w-10 h-10 shrink-0 rounded-full bg-[var(--theme-surface)] border border-neutral-300 flex items-center justify-center text-[var(--theme-primary)] shadow-sm group-hover:scale-110 group-hover:bg-[var(--theme-primary)] group-hover:text-white transition-all duration-300\", children: _jsx(Play, { className: \"w-4 h-4 fill-current ml-0.5\" }) }), _jsxs(\"div\", { className: \"flex flex-col text-left min-w-0\", children: [_jsx(\"span\", { className: \"text-xs font-bold text-[var(--theme-text)] group-hover:text-[var(--theme-primary)] transition-colors truncate\", children: item.title || `Video ${idx + 1}` }), item.subtitle ? _jsx(\"span\", { className: \"text-[10px] text-neutral-400 font-medium truncate\", children: item.subtitle }) : null] })] }, item.id || idx)) }),"""
+          assert old in s
+          s=s.replace(old,new2,1); p.write_text(s)
+
+          p=Path('js/App.js'); s=p.read_text()
+          s=s.replace("const [isVideoReelOpen, setIsVideoReelOpen] = useState(false);","const [isVideoReelOpen, setIsVideoReelOpen] = useState(false);\n    const [selectedHeroVideo, setSelectedHeroVideo] = useState(null);")
+          s=s.replace("onOpenVideoReel: () => setIsVideoReelOpen(true)","onOpenVideoReel: (item) => { setSelectedHeroVideo(item || null); setIsVideoReelOpen(true); }")
+          s=s.replace("_jsx(VideoReelModal, { isOpen: isVideoReelOpen, onClose: () => setIsVideoReelOpen(false), onOpenQuote:","_jsx(VideoReelModal, { isOpen: isVideoReelOpen, videoItem: selectedHeroVideo, onClose: () => { setIsVideoReelOpen(false); setSelectedHeroVideo(null); }, onOpenQuote:")
+          p.write_text(s)
+
+          p=Path('js/components/VideoReelModal.js'); s=p.read_text()
+          s=s.replace("export const VideoReelModal = ({ isOpen, onClose, onOpenQuote, }) => {","export const VideoReelModal = ({ isOpen, onClose, onOpenQuote, videoItem = null, }) => {")
+          s=s.replace("const videoUrl = cmsValue('media.videoReel', '');\n    const poster = cmsValue('media.videoPoster', siteConfig.images.facilityEngineer);\n    const autoPlay = cmsValue('media.videoAutoplay', false);\n    const loop = cmsValue('media.videoLoop', true);\n    const mutedDefault = cmsValue('media.videoMuted', true);","const videoUrl = videoItem?.video || cmsValue('media.videoReel', '');\n    const poster = videoItem?.poster || cmsValue('media.videoPoster', siteConfig.images.facilityEngineer);\n    const autoPlay = videoItem?.autoplay ?? cmsValue('media.videoAutoplay', false);\n    const loop = videoItem?.loop ?? cmsValue('media.videoLoop', true);\n    const mutedDefault = videoItem?.muted ?? cmsValue('media.videoMuted', true);\n    const modalTitle = videoItem?.title || 'Asay P33 Fabrika Yük & Harmonik Testi';\n    const modalSubtitle = videoItem?.subtitle || 'TEST BENCH CAM 01 // LOAD BANK TELEMETRY';")
+          s=s.replace('children: "TEST BENCH CAM 01 // LOAD BANK TELEMETRY"','children: modalSubtitle')
+          s=s.replace('children: "Asay P33 Fabrika Y\\u00FCk & Harmonik Testi"','children: modalTitle')
+          p.write_text(s)
+          PY
+      - name: Build and validate
+        run: |
+          npm install --silent
+          npm run build
+          node --check js/AdminUnifiedPanels.js
+          node --check js/components/Hero.js
+          node --check js/App.js
+          node --check js/components/VideoReelModal.js
+          git diff --check
+      - name: Commit final patch
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add js/AdminUnifiedPanels.js js/App.js js/components/Hero.js js/components/VideoReelModal.js assets/app.js assets/app.js.LEGAL.txt assets/tailwind.css
+          git commit -m 'Add stacked multi-video hero CMS cards'
+          git push origin HEAD:supabase-live-preview
