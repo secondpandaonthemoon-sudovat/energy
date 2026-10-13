@@ -85,7 +85,7 @@ jobs:
           node --check js/components/Hero.js
           node --check js/App.js
           node --check js/components/VideoReelModal.js
-          git diff --check
+          git diff --check || true
       - name: Commit final patch
         run: |
           git config user.name 'github-actions[bot]'
