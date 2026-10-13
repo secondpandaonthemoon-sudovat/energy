@@ -34,12 +34,12 @@ export function ServicesPanel({services,setServices,site,setSite,MediaField}){
  const posX=Math.max(0,Math.min(100,Number(get(site,'serviceStyle.positionX',50))));
  const posY=Math.max(0,Math.min(100,Number(get(site,'serviceStyle.positionY',50))));
  const patch=(i,data)=>{const n=[...list];n[i]={...n[i],...data};setServices(n)};
- const add=()=>{const n=[...list,{id:`service_${Date.now().toString(36)}`,number:String(list.length+1).padStart(2,'0'),title:'Yeni Hizmet',subtitle:'HİZMET',description:'',iconName:'Activity',image:'',enabled:true,sortOrder:list.length}];setServices(n);setActive(n.length-1)};
+ const add=()=>{const n=[...list,{id:`service_${Date.now().toString(36)}`,number:String(list.length+1).padStart(2,'0'),title:'Yeni Hizmet',subtitle:'HİZMET',description:'',iconName:'Activity',image:'',linkText:'Detayları Gör',linkUrl:'',linkVisible:false,linkNewTab:false,enabled:true,sortOrder:list.length}];setServices(n);setActive(n.length-1)};
  const remove=i=>{if(confirm('Bu hizmet kutucuğunu silmek istediğinize emin misiniz?')){setServices(list.filter((_,x)=>x!==i).map((x,k)=>({...x,sortOrder:k})));setActive(Math.max(0,i-1))}};
  const move=(i,d)=>{const j=i+d;if(j<0||j>=list.length)return;const n=[...list];[n[i],n[j]]=[n[j],n[i]];setServices(n.map((x,k)=>({...x,sortOrder:k})));setActive(j)};
  const visible=list.map((s,i)=>({s,i})).filter(x=>x.s.enabled!==false);
  return h('div',{className:'space-y-4'},
-  h(Card,{title:'Hizmetler · Kutucuk & Görsel Yönetimi',sub:`${list.length} hizmet kutucuğu · Ekle / sil / sırala / görsel ata. Index sayfasına gitmeden burada önizleyin.`,actions:BTN('+ Kutucuk Ekle',add,'bg-black text-white')},
+  h(Card,{title:'Hizmetler · Kutucuk & Görsel Yönetimi',sub:`${list.length} hizmet kutucuğu · Ekle / sil / sırala / görsel ve link ata. Index sayfasına gitmeden burada önizleyin.`,actions:BTN('+ Kutucuk Ekle',add,'bg-black text-white')},
    h('div',{className:'grid lg:grid-cols-[1.2fr_.8fr] gap-5'},
     h('div',{className:'relative min-h-[520px] rounded-2xl overflow-hidden bg-neutral-900 border'},
      previewBg&&h('img',{src:previewBg,className:'absolute inset-0 w-full h-full object-cover',style:{objectPosition:`${posX}% ${posY}%`}}),
@@ -47,7 +47,7 @@ export function ServicesPanel({services,setServices,site,setSite,MediaField}){
      h('div',{className:'relative z-10 p-6 md:p-8 max-w-xl space-y-3'},
       h('div',{className:'text-[11px] font-black tracking-[.18em] text-white/70'},'CANLI HİZMET ÖNİZLEMESİ'),
       visible.length?visible.map(({s,i})=>h('button',{key:s.id||i,type:'button',onClick:()=>setActive(i),className:`block w-full text-left rounded-2xl p-4 border transition-all ${i===activeIndex?'bg-[#F1482E] text-white border-[#F1482E] translate-x-1':'bg-white/90 text-black border-white/40'}`},
-       h('div',{className:'flex items-center gap-3'},h('span',{className:'text-sm font-black'},s.number||String(i+1).padStart(2,'0')),h('span',{className:'text-[10px] font-black uppercase opacity-70'},s.subtitle||'HİZMET')),h('div',{className:'font-black mt-1'},s.title||'Hizmet'),h('p',{className:'text-xs mt-1 opacity-80 line-clamp-2'},s.description||''))):h('div',{className:'rounded-xl bg-white/90 p-5 text-sm font-bold'},'Aktif hizmet kutucuğu yok. “+ Kutucuk Ekle” ile yeni kutucuk ekleyin.')
+       h('div',{className:'flex items-center gap-3'},h('span',{className:'text-sm font-black'},s.number||String(i+1).padStart(2,'0')),h('span',{className:'text-[10px] font-black uppercase opacity-70'},s.subtitle||'HİZMET')),h('div',{className:'font-black mt-1'},s.title||'Hizmet'),h('p',{className:'text-xs mt-1 opacity-80 line-clamp-2'},s.description||''),s.linkVisible===true&&s.linkText&&s.linkUrl&&h('span',{className:'inline-block mt-2 text-[10px] font-black underline underline-offset-2'},s.linkText))):h('div',{className:'rounded-xl bg-white/90 p-5 text-sm font-bold'},'Aktif hizmet kutucuğu yok. “+ Kutucuk Ekle” ile yeni kutucuk ekleyin.')
      )
     ),
     h('div',{className:'space-y-4'},
@@ -55,7 +55,7 @@ export function ServicesPanel({services,setServices,site,setSite,MediaField}){
      slider('Görsel X Konumu',posX,0,100,1,'%',v=>setSite('serviceStyle.positionX',v)),
      slider('Görsel Y Konumu',posY,0,100,1,'%',v=>setSite('serviceStyle.positionY',v)),
      slider('Koyu Katman',overlay,0,90,1,'%',v=>setSite('serviceStyle.overlay',v)),
-     h('div',{className:'rounded-xl bg-neutral-50 border p-3 text-xs text-black/55'},'Her kutucuğa ayrı görsel atayabilirsiniz. Kutucuk ziyaretçi tarafından aktif edildiğinde o görsel arka planda gösterilir. Özel görsel yoksa bölüm ana görseli kullanılır.')
+     h('div',{className:'rounded-xl bg-neutral-50 border p-3 text-xs text-black/55'},'Her kutucuğa ayrı görsel ve isteğe bağlı link atayabilirsiniz. “Linki Göster” kapalı olan link index sayfasında render edilmez.')
     )
    )
   ),
@@ -66,10 +66,17 @@ export function ServicesPanel({services,setServices,site,setSite,MediaField}){
      h(Field,{label:'Başlık',value:s.title||'',onChange:v=>patch(i,{title:v})}),
      h(Field,{label:'Alt Başlık',value:s.subtitle||'',onChange:v=>patch(i,{subtitle:v})}),
      h('label',{className:'block'},h('span',{className:'block text-[11px] font-black uppercase text-black/45 mb-1'},'İkon'),h('select',{value:s.iconName||'Activity',onChange:e=>patch(i,{iconName:e.target.value}),className:'w-full border rounded-xl p-3 bg-white'},...['Activity','Layers','Wrench','ShieldCheck'].map(x=>h('option',{key:x,value:x},x)))),
-     h(Field,{label:'Açıklama',value:s.description||'',area:true,onChange:v=>patch(i,{description:v})})
+     h(Field,{label:'Açıklama',value:s.description||'',area:true,onChange:v=>patch(i,{description:v})}),
+     h('div',{className:'mt-4 rounded-xl border bg-neutral-50 p-4 space-y-3'},
+      h('div',{className:'flex flex-wrap items-center justify-between gap-3'},h('div',null,h('b',{className:'text-sm'},'Kutucuk Linki'),h('p',{className:'text-xs text-black/45 mt-1'},'“Linki Göster” kapalıysa index sayfasında link hiç render edilmez.')),h('label',{className:'inline-flex items-center gap-2 text-sm font-bold'},h('input',{type:'checkbox',checked:s.linkVisible===true,onChange:e=>patch(i,{linkVisible:e.target.checked}),className:'accent-[#F1482E]'}),'Linki Göster')),
+      h(Field,{label:'Link Yazısı',value:s.linkText||'',onChange:v=>patch(i,{linkText:v})}),
+      h(Field,{label:'Link / URL',value:s.linkUrl||'',onChange:v=>patch(i,{linkUrl:v})}),
+      h('label',{className:'inline-flex items-center gap-2 text-sm font-bold'},h('input',{type:'checkbox',checked:s.linkNewTab===true,onChange:e=>patch(i,{linkNewTab:e.target.checked}),className:'accent-[#F1482E]'}),'Yeni sekmede aç')
+     )
     ),
     h('div',{className:'space-y-3'},
      h(MediaField,{l:'Bu Hizmete Özel Görsel',v:s.image||'',set:v=>patch(i,{image:v})}),
+     s.linkVisible===true&&s.linkText&&s.linkUrl?h('div',{className:'rounded-xl border border-emerald-200 bg-emerald-50 p-3 text-xs text-emerald-800'},`Sitede link görünecek: ${s.linkText}`):h('div',{className:'rounded-xl border bg-neutral-50 p-3 text-xs text-black/45'},'Bu hizmet için link gizli.'),
      h('button',{type:'button',onClick:()=>setActive(i),className:'w-full rounded-xl bg-black text-white p-3 text-xs font-black'},'Bu Kutucuğu Önizle')
     )
    )
