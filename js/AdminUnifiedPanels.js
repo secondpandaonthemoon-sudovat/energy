@@ -52,14 +52,16 @@ export function VideoPanel({site,setSite,MediaField}){
  const setVideos=(next)=>setSite('media.heroVideos',next.map((x,i)=>({...x,sortOrder:i})));
  const patch=(i,data)=>{const n=[...videos];n[i]={...n[i],...data};setVideos(n)};
  const add=()=>setVideos([...videos,{id:`video_${Date.now().toString(36)}`,title:'Yeni Video',subtitle:'',video:'',poster:'',visible:false,autoplay:false,loop:true,muted:true,sortOrder:videos.length}]);
- const remove=i=>{if(confirm('Bu video kartı silinsin mi?'))setVideos(videos.filter((_,x)=>x!==i))};
+ const remove=i=>{if(confirm('Bu video kartı CMS listesinden tamamen silinsin mi?'))setVideos(videos.filter((_,x)=>x!==i))};
+ const detach=i=>patch(i,{visible:false});
+ const restore=i=>patch(i,{visible:true});
  const move=(i,d)=>{const j=i+d;if(j<0||j>=videos.length)return;const n=[...videos];[n[i],n[j]]=[n[j],n[i]];setVideos(n)};
  return h('div',null,
   h(Card,{title:'Hero Görünürlük',sub:'Giriş ekranındaki P33 bilgi kartını ve hero video kartlarını yönetin.',actions:BTN('+ Yeni Video',add,'bg-black text-white')},h('div',{className:'space-y-5'},
    h('div',{className:'rounded-xl border p-4 space-y-3'},h(Toggle,{label:'“P33-PRO / YÜKSEK PERFORMANS” kartını göster',value:get(site,'hero.badgeVisible',true)!==false,onChange:v=>setSite('hero.badgeVisible',v)}),h('div',{className:'grid md:grid-cols-2 gap-3'},h(Field,{label:'P33 Kart Başlığı',value:get(site,'hero.badgeTitle','P33-PRO / YÜKSEK PERFORMANS'),onChange:v=>setSite('hero.badgeTitle',v)}),h(Field,{label:'Kart Link Yazısı',value:get(site,'hero.badgeLink','Teknik Şartnameyi İncele'),onChange:v=>setSite('hero.badgeLink',v)})),h(Field,{label:'Kart Açıklaması',area:true,value:get(site,'hero.badgeDescription',''),onChange:v=>setSite('hero.badgeDescription',v)})),
-   h('div',{className:'rounded-xl bg-neutral-50 border p-3 text-xs text-black/55'},'Video kartları index sayfasında sol altta üst üste sıralanır. Her kartın kendi “Göster” kutucuğu vardır. İşaretli olmayan kart frontend’de hiç render edilmez.')
+   h('div',{className:'rounded-xl bg-neutral-50 border p-3 text-xs text-black/55'},'Video kartları index sayfasında sol altta üst üste sıralanır. “Hero’dan Çıkart” kartı gizler ama ayarlarını korur; “Sil” kartı CMS listesinden tamamen kaldırır. Her kartın kendi “Göster” kutucuğu vardır.')
   )),
-  ...videos.map((v,i)=>h(Card,{key:v.id||i,title:`Video ${i+1} · ${v.title||'Başlıksız'}`,sub:v.visible===false?'Gizli · Sitede görünmez':'Gösteriliyor · Sitede görünür',actions:h('div',{className:'flex flex-wrap gap-2'},BTN('↑',()=>move(i,-1)),BTN('↓',()=>move(i,1)),BTN('Çıkart',()=>remove(i),'text-red-600'))},
+  ...videos.map((v,i)=>h(Card,{key:v.id||i,title:`Video ${i+1} · ${v.title||'Başlıksız'}`,sub:v.visible===false?'Gizli · Sitede görünmez':'Gösteriliyor · Sitede görünür',actions:h('div',{className:'flex flex-wrap gap-2'},BTN('↑',()=>move(i,-1)),BTN('↓',()=>move(i,1)),v.visible===false?BTN('Hero’ya Ekle',()=>restore(i),'bg-emerald-50 text-emerald-700'):BTN('Hero’dan Çıkart',()=>detach(i),'bg-amber-50 text-amber-700'),BTN('Sil',()=>remove(i),'text-red-600'))},
    h('div',{className:'space-y-4'},
     h('div',{className:'flex items-center justify-between gap-3 rounded-xl border bg-neutral-50 p-3'},h('div',null,h('b',{className:'text-sm'},'Kart Görünürlüğü'),h('p',{className:'text-xs text-black/45 mt-1'},'Kapalıysa hero alanında bu video kartı hiç görünmez.')),h(Toggle,{label:'Göster',value:v.visible!==false,onChange:x=>patch(i,{visible:x})})),
     h('div',{className:'grid md:grid-cols-2 gap-4'},h(Field,{label:'Video Başlığı',value:v.title||'',onChange:x=>patch(i,{title:x})}),h(Field,{label:'Video Alt Başlığı',value:v.subtitle||'',onChange:x=>patch(i,{subtitle:x})}),h(MediaField,{l:'Video Dosyası',v:v.video||'',set:x=>patch(i,{video:x}),video:true}),h(MediaField,{l:'Poster',v:v.poster||'',set:x=>patch(i,{poster:x})})),
@@ -68,4 +70,3 @@ export function VideoPanel({site,setSite,MediaField}){
   ))
  );
 }
-
