@@ -20,5 +20,13 @@ try {
   diagnostics.push('TAILWIND_ERROR');
   diagnostics.push(String(e?.stderr || e?.message || e));
 }
-fs.writeFileSync(path.join(root,'assets','build-diagnostics.txt'),diagnostics.join('\n'));
-console.log(diagnostics.join('\n'));
+const text=diagnostics.join('\n');
+fs.writeFileSync(path.join(root,'assets','build-diagnostics.txt'),text);
+if (diagnostics.includes('ESBUILD_ERROR') || diagnostics.includes('TAILWIND_ERROR')) {
+  const indexPath=path.join(root,'index.html');
+  let html=fs.readFileSync(indexPath,'utf8');
+  const escaped=text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  html=html.replace('</body>',`<pre id="build-diagnostics" style="position:fixed;inset:10px;z-index:999999;background:#111;color:#fff;padding:20px;overflow:auto;white-space:pre-wrap">${escaped}</pre></body>`);
+  fs.writeFileSync(indexPath,html);
+}
+console.log(text);
