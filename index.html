@@ -12,33 +12,6 @@
   <link rel="stylesheet" href="/assets/tailwind.css?v=3-parallax" />
   <link rel="stylesheet" href="/assets/site.css?v=3-parallax" />
   <link rel="stylesheet" href="/assets/hero-reference-override.css?v=studio-3-7-reference" />
-  <style>
-    body.asay-admin-simple { padding-bottom: 96px !important; }
-    body.asay-admin-simple [data-admin-ui="true"] { display:block !important; grid-template-columns:minmax(0,1fr) !important; width:100% !important; }
-    body.asay-admin-simple #admin-navigation { display:none !important; }
-    body.asay-admin-simple [data-admin-ui="true"] > .min-w-0 { width:100% !important; min-width:0 !important; }
-    body.asay-admin-simple .admin-toolbar { width:100% !important; left:0 !important; }
-    body.asay-admin-simple #admin-main { width:min(1500px,100%) !important; max-width:1500px !important; margin:0 auto !important; padding-left:clamp(18px,3vw,46px) !important; padding-right:clamp(18px,3vw,46px) !important; }
-    body.asay-admin-simple #admin-main > * { max-width:none !important; }
-    body.asay-admin-simple .admin-editor-guide { width:100% !important; }
-    body.asay-admin-simple .asay-raw-media-group { display:none !important; }
-    #asay-simple-admin { position:fixed; left:50%; bottom:16px; transform:translateX(-50%); z-index:100000; width:min(1240px,calc(100vw - 24px)); background:rgba(12,12,12,.96); color:#fff; border:1px solid rgba(255,255,255,.12); border-radius:20px; box-shadow:0 24px 70px rgba(0,0,0,.28); backdrop-filter:blur(18px); padding:10px; font-family:'Plus Jakarta Sans',sans-serif; }
-    #asay-simple-admin .asay-dock-row { display:flex; align-items:center; gap:8px; overflow-x:auto; scrollbar-width:none; }
-    #asay-simple-admin .asay-dock-row::-webkit-scrollbar { display:none; }
-    #asay-simple-admin button { border:0; cursor:pointer; white-space:nowrap; border-radius:13px; padding:11px 14px; font-size:12px; font-weight:800; color:#fff; background:rgba(255,255,255,.08); transition:.18s ease; }
-    #asay-simple-admin button:hover { background:rgba(255,255,255,.16); transform:translateY(-1px); }
-    #asay-simple-admin button.asay-primary { background:#F1482E; }
-    #asay-simple-admin button.asay-publish { background:#fff; color:#111; margin-left:auto; }
-    #asay-simple-admin button.asay-mode { background:transparent; border:1px solid rgba(255,255,255,.16); }
-    #asay-simple-admin .asay-advanced { display:none; position:absolute; right:10px; bottom:68px; width:min(390px,calc(100vw - 36px)); background:#111; border:1px solid rgba(255,255,255,.12); border-radius:18px; padding:10px; box-shadow:0 20px 60px rgba(0,0,0,.35); }
-    #asay-simple-admin .asay-advanced.open { display:grid; grid-template-columns:1fr 1fr; gap:7px; }
-    .asay-media-preview { margin:0 0 10px; border:1px solid rgba(0,0,0,.09); border-radius:14px; overflow:hidden; background:#f6f6f4; min-height:112px; display:grid; place-items:center; position:relative; }
-    .asay-media-preview img { width:100%; height:150px; display:block; object-fit:contain; background:#f4f4f2; }
-    .asay-media-preview .asay-media-caption { position:absolute; left:8px; bottom:8px; background:rgba(0,0,0,.72); color:white; border-radius:8px; padding:5px 7px; font-size:10px; font-weight:800; max-width:calc(100% - 16px); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
-    .asay-media-preview.asay-broken::after { content:'Görsel önizlenemedi'; font-size:11px; color:#777; font-weight:700; }
-    .asay-media-preview.asay-broken img { display:none; }
-    @media(max-width:720px){body.asay-admin-simple{padding-bottom:88px!important}body.asay-admin-simple #admin-main{padding-left:14px!important;padding-right:14px!important}#asay-simple-admin{bottom:8px;border-radius:16px;padding:8px}#asay-simple-admin button{padding:10px 12px;font-size:11px}#asay-simple-admin button.asay-publish{margin-left:0}.asay-media-preview img{height:120px}}
-  </style>
 </head>
 <body class="bg-[var(--theme-background)] text-[var(--theme-text)] antialiased selection:bg-[var(--theme-accent)] selection:text-white">
   <div id="root"><div style="min-height:100vh;display:grid;place-items:center;font-family:Arial,sans-serif">ASAY Energy yükleniyor…</div></div>
@@ -55,31 +28,79 @@
         if (!raw) return nativeFetch(input, init);
         const u = new URL(raw, window.location.origin);
         if (u.pathname === '/api/content') return nativeFetch(contentUrl, init);
-        if (u.pathname.startsWith('/api/admin/')) { const route=u.pathname.replace(/^\/api\//,''); const target=new URL(adminUrl); target.searchParams.set('route',route); u.searchParams.forEach((v,k)=>target.searchParams.append(k,v)); return nativeFetch(target.toString(),init); }
-        if (u.pathname === '/api/quotes' || u.pathname === '/api/contact' || u.pathname === '/api/translate/batch') { const route=u.pathname.replace(/^\/api\//,''); const target=new URL(publicUrl); target.searchParams.set('route',route); return nativeFetch(target.toString(),init); }
+        if (u.pathname.startsWith('/api/admin/')) {
+          const route = u.pathname.replace(/^\/api\//, '');
+          const target = new URL(adminUrl);
+          target.searchParams.set('route', route);
+          u.searchParams.forEach((v, k) => target.searchParams.append(k, v));
+          return nativeFetch(target.toString(), init);
+        }
+        if (u.pathname === '/api/quotes' || u.pathname === '/api/contact' || u.pathname === '/api/translate/batch') {
+          const route = u.pathname.replace(/^\/api\//, '');
+          const target = new URL(publicUrl);
+          target.searchParams.set('route', route);
+          return nativeFetch(target.toString(), init);
+        }
         return nativeFetch(input, init);
       };
-      const pairs=[['CAD EXPLODED VIEW // 400V 50HZ 3-PHASE','CAD PATLATILMIŞ GÖRÜNÜM // 400 V 50 HZ 3 FAZ'],['MODEL: DIESEL-GENERATOR-SETS','MODEL: DİZEL-JENERATÖR-SETLERİ'],['Standby & Prime Standart','Yedek & Sürekli Güç Standartları'],['Maintenance & Spares','Bakım & Yedek Parça'],['Turnkey Projects','Anahtar Teslim Projeler'],['Technical Service','Teknik Servis'],['Power Solutions','Güç Çözümleri'],['POWER SYSTEMS','GÜÇ SİSTEMLERİ'],['Load Bank Test','Yük Bankası Testi'],['Data Center','Veri Merkezi'],['Load Bank','Yük Bankası'],['Standby','Yedek Güç'],['POWER','GÜÇ']];
-      const attrs=['aria-label','title','placeholder','alt'];
-      function activeLang(){return localStorage.getItem('asay_language')==='en'?'en':'tr'}
-      function convertText(value){if(!value)return value;let out=String(value);const ordered=activeLang()==='tr'?pairs:pairs.map(([en,tr])=>[tr,en]);for(const[from,to]of ordered)if(out.includes(from))out=out.split(from).join(to);return out}
-      function fixNode(root=document.body){if(!root)return;const walker=document.createTreeWalker(root,NodeFilter.SHOW_TEXT);let node;while((node=walker.nextNode())){const raw=node.nodeValue||'';if(!raw.trim())continue;const converted=convertText(raw);if(converted!==raw)node.nodeValue=converted}const els=root.querySelectorAll?root.querySelectorAll('*'):[];for(const el of els)for(const attr of attrs){const value=el.getAttribute?.(attr);if(!value)continue;const converted=convertText(value);if(converted!==value)el.setAttribute(attr,converted)}}
-      let queued=false;function scheduleFix(){if(queued)return;queued=true;requestAnimationFrame(()=>{queued=false;fixNode()})}
-      window.addEventListener('asay-language-change',scheduleFix);window.addEventListener('storage',e=>{if(e.key==='asay_language')scheduleFix()});new MutationObserver(scheduleFix).observe(document.documentElement,{childList:true,subtree:true,characterData:true,attributes:true,attributeFilter:attrs});document.addEventListener('DOMContentLoaded',scheduleFix);setTimeout(scheduleFix,100);setTimeout(scheduleFix,500);setTimeout(scheduleFix,1500);
-      if(location.pathname.startsWith('/admin')){
-        const SIMPLE_KEY='asay_admin_simple_mode';if(localStorage.getItem(SIMPLE_KEY)==null)localStorage.setItem(SIMPLE_KEY,'1');
-        const findButton=label=>[...document.querySelectorAll('button')].find(b=>(b.textContent||'').trim().includes(label));
-        const clickTab=label=>{const b=findButton(label);if(b){b.click();return true}return false};
-        const clickAction=labels=>{for(const l of labels){const b=findButton(l);if(b){b.click();return true}}return false};
-        const isImageValue=v=>typeof v==='string'&&(/\.(png|jpe?g|webp|gif|svg|avif)(\?|#|$)/i.test(v)||/\/assets\/img|\/src\/assets\/img/i.test(v));
-        function markRawMediaGroups(){if(!document.body.classList.contains('asay-admin-simple'))return;document.querySelectorAll('#admin-main details.admin-setting-group').forEach(d=>{const s=(d.querySelector(':scope > summary')?.textContent||'').trim().toLocaleLowerCase('tr');if(['images','görseller','logos','logolar','media','medya'].includes(s))d.classList.add('asay-raw-media-group')})}
-        function enhanceImageInputs(){document.querySelectorAll('#admin-main input[type="text"]').forEach(input=>{const value=input.value||'';if(!isImageValue(value))return;const label=input.closest('label');if(!label||label.dataset.asayMediaEnhanced==='1')return;label.dataset.asayMediaEnhanced='1';const preview=document.createElement('div');preview.className='asay-media-preview';const img=document.createElement('img');img.alt='Görsel önizleme';img.loading='lazy';const cap=document.createElement('div');cap.className='asay-media-caption';cap.textContent=value;const update=()=>{const v=input.value||'';img.src=v;cap.textContent=v;preview.classList.remove('asay-broken')};img.addEventListener('error',()=>preview.classList.add('asay-broken'));preview.append(img,cap);input.before(preview);update();input.addEventListener('input',()=>requestAnimationFrame(update))})}
-        function buildDock(){const loggedIn=!!findButton('Genel Bakış')||!!findButton('Sayfalar')||!!findButton('Ürünler');const existing=document.getElementById('asay-simple-admin');if(!loggedIn){existing?.remove();document.body.classList.remove('asay-admin-simple');return}if(!existing){const dock=document.createElement('div');dock.id='asay-simple-admin';dock.innerHTML=`<div class="asay-dock-row"><button class="asay-primary" data-tab="Sayfalar">Ana Sayfa</button><button data-tab="Marka & İletişim" data-open-texts>Tüm Metinler</button><button data-tab="Ürünler">Ürünler</button><button data-tab="Medya">Görseller</button><button data-tab="Projeler">Projeler</button><button data-tab="Talepler ve Mesajlar">Talepler</button><button class="asay-mode" data-advanced>Diğer ▴</button><button class="asay-mode" data-mode>Tüm Menü</button><button class="asay-publish" data-publish>Yayınla</button></div><div class="asay-advanced"><button data-tab="Genel Bakış">Genel Bakış</button><button data-tab="Hakkımızda">Hakkımızda</button><button data-tab="Hizmetler">Hizmetler</button><button data-tab="Görsel İşaretleri">Hotspotlar</button><button data-tab="Menüler">Menüler</button><button data-tab="SEO">SEO</button><button data-tab="Tema & Görünüm">Tema & Görünüm</button><button data-tab="Marka & İletişim">Marka & Site</button></div>`;document.body.appendChild(dock);dock.querySelectorAll('[data-tab]').forEach(btn=>btn.addEventListener('click',()=>{clickTab(btn.dataset.tab);dock.querySelector('.asay-advanced')?.classList.remove('open');if(btn.hasAttribute('data-open-texts'))setTimeout(()=>document.querySelectorAll('#admin-main details.admin-setting-group:not(.asay-raw-media-group)').forEach(x=>x.open=true),350)}));dock.querySelector('[data-advanced]').addEventListener('click',()=>dock.querySelector('.asay-advanced').classList.toggle('open'));dock.querySelector('[data-publish]').addEventListener('click',()=>clickAction(['Yayınla','Publish']));dock.querySelector('[data-mode]').addEventListener('click',e=>{const simple=document.body.classList.toggle('asay-admin-simple');localStorage.setItem(SIMPLE_KEY,simple?'1':'0');e.currentTarget.textContent=simple?'Tüm Menü':'Basit Mod';setTimeout(()=>{markRawMediaGroups();enhanceImageInputs()},50)})}const simple=localStorage.getItem(SIMPLE_KEY)!=='0';document.body.classList.toggle('asay-admin-simple',simple);document.querySelector('#asay-simple-admin [data-mode]').textContent=simple?'Tüm Menü':'Basit Mod';markRawMediaGroups();enhanceImageInputs()}
-        let adminQueued=false;const syncAdmin=()=>{if(adminQueued)return;adminQueued=true;requestAnimationFrame(()=>{adminQueued=false;buildDock();markRawMediaGroups();enhanceImageInputs()})};new MutationObserver(syncAdmin).observe(document.documentElement,{childList:true,subtree:true});document.addEventListener('DOMContentLoaded',syncAdmin);setTimeout(syncAdmin,500);setTimeout(syncAdmin,1400)
+
+      const pairs = [
+        ['CAD EXPLODED VIEW // 400V 50HZ 3-PHASE','CAD PATLATILMIŞ GÖRÜNÜM // 400 V 50 HZ 3 FAZ'],
+        ['MODEL: DIESEL-GENERATOR-SETS','MODEL: DİZEL-JENERATÖR-SETLERİ'],
+        ['Standby & Prime Standart','Yedek & Sürekli Güç Standartları'],
+        ['Maintenance & Spares','Bakım & Yedek Parça'],
+        ['Turnkey Projects','Anahtar Teslim Projeler'],
+        ['Technical Service','Teknik Servis'],
+        ['Power Solutions','Güç Çözümleri'],
+        ['POWER SYSTEMS','GÜÇ SİSTEMLERİ'],
+        ['Load Bank Test','Yük Bankası Testi'],
+        ['Data Center','Veri Merkezi'],
+        ['Load Bank','Yük Bankası'],
+        ['Standby','Yedek Güç'],
+        ['POWER','GÜÇ']
+      ];
+      const attrs = ['aria-label','title','placeholder','alt'];
+      function activeLang(){ return localStorage.getItem('asay_language') === 'en' ? 'en' : 'tr'; }
+      function convertText(value){
+        if (!value) return value;
+        let out = String(value);
+        const ordered = activeLang() === 'tr' ? pairs : pairs.map(([en,tr]) => [tr,en]);
+        for (const [from,to] of ordered) if (out.includes(from)) out = out.split(from).join(to);
+        return out;
       }
+      function fixNode(root=document.body){
+        if (!root) return;
+        const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+        let node;
+        while ((node = walker.nextNode())) {
+          const raw = node.nodeValue || '';
+          if (!raw.trim()) continue;
+          const converted = convertText(raw);
+          if (converted !== raw) node.nodeValue = converted;
+        }
+        const els = root.querySelectorAll ? root.querySelectorAll('*') : [];
+        for (const el of els) for (const attr of attrs) {
+          const value = el.getAttribute?.(attr);
+          if (!value) continue;
+          const converted = convertText(value);
+          if (converted !== value) el.setAttribute(attr, converted);
+        }
+      }
+      let queued = false;
+      function scheduleFix(){
+        if (queued) return;
+        queued = true;
+        requestAnimationFrame(() => { queued = false; fixNode(); });
+      }
+      window.addEventListener('asay-language-change', scheduleFix);
+      window.addEventListener('storage', e => { if (e.key === 'asay_language') scheduleFix(); });
+      new MutationObserver(scheduleFix).observe(document.documentElement,{childList:true,subtree:true,characterData:true,attributes:true,attributeFilter:attrs});
+      document.addEventListener('DOMContentLoaded', scheduleFix);
+      setTimeout(scheduleFix, 100);
+      setTimeout(scheduleFix, 500);
+      setTimeout(scheduleFix, 1500);
     })();
   </script>
-  <script type="module" src="/assets/app.js?v=studio-3-7-admin-ux-fix3"></script>
-  <script type="module" src="/js/AdminVisualEditor.js?v=visual-cms-1"></script>
+  <script type="module" src="/assets/app.js?v=studio-3-7-admin-clean4"></script>
 </body>
 </html>
