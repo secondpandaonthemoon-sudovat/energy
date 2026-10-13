@@ -23,7 +23,18 @@
       const contentUrl = edgeBase + '/asay-energy-content';
       const adminUrl = edgeBase + '/asay-energy-admin';
       const publicUrl = edgeBase + '/asay-energy-public';
-      window.fetch = (input, init = {}) => {
+
+      function dataUrlToFile(dataUrl, fileName='upload') {
+        const match = String(dataUrl || '').match(/^data:([^;,]+)?(;base64)?,(.*)$/s);
+        if (!match) return null;
+        const mime = match[1] || 'application/octet-stream';
+        const raw = match[2] ? atob(match[3]) : decodeURIComponent(match[3]);
+        const bytes = new Uint8Array(raw.length);
+        for (let i = 0; i < raw.length; i++) bytes[i] = raw.charCodeAt(i);
+        return new File([bytes], fileName || 'upload', { type: mime });
+      }
+
+      window.fetch = async (input, init = {}) => {
         const raw = typeof input === 'string' ? input : input?.url;
         if (!raw) return nativeFetch(input, init);
         const u = new URL(raw, window.location.origin);
@@ -33,6 +44,27 @@
           const target = new URL(adminUrl);
           target.searchParams.set('route', route);
           u.searchParams.forEach((v, k) => target.searchParams.append(k, v));
+
+          if (u.pathname === '/api/admin/upload' && String(init.method || 'GET').toUpperCase() === 'POST') {
+            let body = init.body;
+            if (!(body instanceof FormData)) {
+              try {
+                const payload = typeof body === 'string' ? JSON.parse(body) : body;
+                const file = dataUrlToFile(payload?.data, payload?.fileName || 'upload');
+                if (file) {
+                  const form = new FormData();
+                  form.append('file', file, file.name);
+                  form.append('title', payload?.title || file.name);
+                  body = form;
+                }
+              } catch (_) {}
+            }
+            const headers = new Headers(init.headers || {});
+            headers.delete('Content-Type');
+            headers.delete('content-type');
+            return nativeFetch(target.toString(), { ...init, headers, body });
+          }
+
           return nativeFetch(target.toString(), init);
         }
         if (u.pathname === '/api/quotes' || u.pathname === '/api/contact' || u.pathname === '/api/translate/batch') {
@@ -101,6 +133,6 @@
       setTimeout(scheduleFix, 1500);
     })();
   </script>
-  <script type="module" src="/assets/app.js?v=studio-3-7-admin-clean4"></script>
+  <script type="module" src="/assets/app.js?v=studio-3-7-admin-clean5"></script>
 </body>
 </html>
