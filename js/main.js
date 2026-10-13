@@ -1,3 +1,4 @@
+import { installVisualBridge } from './visualBridge.js';
 import { jsx as _jsx, jsxs as _jsxs, Fragment } from 'react/jsx-runtime';
 import React from 'react';
 import { createRoot } from 'react-dom/client';
@@ -39,6 +40,7 @@ async function boot() {
         const admin = /^\/admin(?:\/|$)/.test(localPath(location.pathname));
         const content = admin ? null : await loadRuntimeContent();
         root.render(_jsx(StartupBoundary, { children: admin ? _jsx(AdminApp, {}) : _jsxs(Fragment, { children: [_jsx(App, {}), content.loadError && _jsx(PreviewNotice, {})] }) }));
+        if (!admin) installVisualBridge(root, () => root.render(_jsx(StartupBoundary, { children: _jsx(App, {}) })));
         window.asayStartup?.ready();
     } catch (error) {
         window.asayStartup?.fail(error);

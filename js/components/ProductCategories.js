@@ -8,7 +8,8 @@ export const ProductCategories = ({ onSelectProduct, onOpenQuoteWithProduct, onO
     const [activeDivisionId, setActiveDivisionId] = useState('jenerator');
     const currentDivision = siteConfig.divisions.find((d) => d.id === activeDivisionId) || siteConfig.divisions[0] || { id: '', name: '', shortName: '', tagline: '', description: '', products: [] };
     // Active Model inside the current division
-    const [selectedProduct, setSelectedProduct] = useState(currentDivision.products[0]);
+    const [selectedProductState, setSelectedProduct] = useState(currentDivision.products[0]);
+    const selectedProduct = currentDivision.products.find(p => p.id === selectedProductState?.id) || currentDivision.products[0];
     const [modelPage, setModelPage] = useState(0);
     const modelsPerPage = 4;
     const visibleProducts = useMemo(() => {

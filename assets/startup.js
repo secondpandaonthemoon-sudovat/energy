@@ -21,5 +21,5 @@
   };
   if (location.protocol === 'file:') { fail(new Error('HTTP server required')); return; }
   timer = setTimeout(function () { fail(new Error('Application startup timed out')); }, 15000);
-  import(new URL('assets/app.js?v=4-localhost', document.baseURI).href).catch(fail);
+  import(new URL('assets/app.js?v=5-visual-editor', document.baseURI).href).catch(fail);
 })();

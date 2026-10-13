@@ -52,3 +52,14 @@ Orijinal görseller, başlangıç CMS verisi ve veritabanı şeması korunmuştu
 ## XAMPP alt klasör ve başlangıç düzeltmesi
 
 `asayenergy1` gibi alt klasörlerde JavaScript/CSS, API, medya, admin ve önizleme yolları kurulum köküne göre çözülür. Apache PHP giriş sayfası doğru temel yolu belirtir; doğrudan `index.html` için de destek vardır. Apache CGI/FastCGI oturum başlığının iletilmesi düzeltildi. Açılış hatası ve API zaman aşımı artık sonsuz yükleme yerine açıklanır. Gerçek Apache alt klasör, giriş, taslak/önizleme/yayın, iletişim, güvenli yükleme ve oturum testleri geçti.
+
+## Önizlemeli yönetim paneli
+
+- Giriş ekranından sonra doğrudan “Siteyi Düzenle” açılır. Gerçek site önizlemesindeki yazı ve görseller seçilip yan panelden düzenlenir; kaydetmeden taslak önizlemeye yansır.
+- Masaüstü/telefon önizlemesi, alan arama ve gezinme/düzenleme modları eklendi. Açılır iletişim, hakkımızda ve ürün pencereleri gezinme modunda açılabilir. Önizleme form gönderimini engeller.
+- Ürünler; arama, liste, seçili kayıt ve açılır teknik detaylardan oluşan ayrı ekrana taşındı. Ekleme, silme, kopyalama, sıralama, görünürlük, özellik satırları, görsel/PDF ve ürün grubu metinleri korundu.
+- Günlük menü sadeleştirildi; önceki sayfa, hizmet, hotspot, marka, tema ve menü araçları “Diğer düzenleme araçları” altında korunur.
+- Sabit yazıların güvenli düz metin değişiklikleri de CMS'te saklanır. Aynı sabit yazının tüm kullanımları değişir; resmin içine işlenmiş yazılar görsel dosyası değiştirilerek düzenlenir.
+- Veritabanı yeniden kurulmaz. Mevcut bağlantı ayarı ve yüklenen dosyalar korunmalıdır. Ayrıntılar ADMIN_KULLANIM.md dosyasındadır.
+- Doğrulama: build, runtime testleri ve Apache /asayenergy1 altında tarayıcı testi; gerçek tıklama, canlı yazı/görsel alanı, ürün ekle/özellik/kopyala/sil, pencere düzenleme, taslak izolasyonu, yayınlama ve 1600/390 px taşma kontrolleri.
+- Stitch bu oturumda bağlı olmadığı için index üzerinde Stitch tasarımı uygulanmadı; API anahtarı proje veya dağıtım paketine eklenmedi.

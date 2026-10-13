@@ -1,5 +1,6 @@
 import { appUrl, assetUrl, localPath, resolveAssetTree } from './appPaths.js';
 import { siteConfig } from './data/siteConfig.js';
+const bundledConfig = structuredClone(siteConfig);
 export const runtimeContent = {
     version: 0, settings: {}, pages: [], menus: [], entities: { products: [], projects: [], services: [], hotspots: [] },
 };
@@ -78,6 +79,20 @@ function applyEntities(data) {
     siteConfig.products = products.map(cleanMeta);
 }
 function cleanMeta(obj) { const out = { ...obj }; delete out._rowId; delete out.enabled; delete out.sortOrder; return out; }
+export function applyRuntimeData(raw) {
+    const data = resolveAssetTree(raw);
+    runtimeContent.version = Number(data.version || 0);
+    runtimeContent.settings = data.settings || {};
+    runtimeContent.pages = data.pages || [];
+    runtimeContent.menus = data.menus || [];
+    runtimeContent.entities = data.entities || runtimeContent.entities;
+    for (const key of Object.keys(siteConfig)) delete siteConfig[key];
+    Object.assign(siteConfig, structuredClone(bundledConfig));
+    deepMerge(siteConfig, runtimeContent.settings.site_config || {});
+    applyTheme((runtimeContent.settings.site_config || {}).theme || {});
+    applyEntities(runtimeContent);
+    applySeo();
+}
 export async function loadRuntimeContent() {
     const controller = new AbortController();
     const timer = setTimeout(() => controller.abort(), 6000);
@@ -96,16 +111,7 @@ export async function loadRuntimeContent() {
         if (!res.ok) throw new Error(`CMS HTTP ${res.status}`);
         const raw = await res.json();
         if (!raw || !Array.isArray(raw.pages) || !raw.settings || !raw.entities) throw new Error('Invalid CMS response');
-        const data = resolveAssetTree(raw);
-        runtimeContent.version = Number(data.version || 0);
-        runtimeContent.settings = data.settings || {};
-        runtimeContent.pages = data.pages || [];
-        runtimeContent.menus = data.menus || [];
-        runtimeContent.entities = data.entities || runtimeContent.entities;
-        deepMerge(siteConfig, runtimeContent.settings.site_config || {});
-        applyTheme((runtimeContent.settings.site_config || {}).theme || {});
-        applyEntities(runtimeContent);
-        applySeo();
+        applyRuntimeData(raw);
     }
     catch (e) {
         runtimeContent.loadError = e.name === 'AbortError' ? 'timeout' : 'unavailable';
@@ -197,6 +203,7 @@ export function runCmsLink(link, actions = {}) {
         document.getElementById('projects-section')?.scrollIntoView({ behavior: 'smooth' });
         return true;
     }
+    if (new URLSearchParams(location.search).get('visualEditor') === '1' && parent !== window && link.type !== 'anchor') return false;
     const href = resolveCmsHref(link);
     if (!href || href === '#')
         return false;
