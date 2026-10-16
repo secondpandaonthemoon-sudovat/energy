@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ASAY Energy — Live Preview</title>
+  <meta name="robots" content="noindex,nofollow" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://raw.githack.com/secondpandaonthemoon-sudovat/energy/main/assets/tailwind.css" />
+  <link rel="stylesheet" href="https://raw.githack.com/secondpandaonthemoon-sudovat/energy/main/assets/site.css" />
+  <style>
+    #asay-preview-status{position:fixed;right:12px;bottom:12px;z-index:2147483647;background:rgba(8,8,8,.86);color:#fff;padding:8px 11px;border-radius:999px;font:700 10px/1.2 Arial,sans-serif;letter-spacing:.04em;backdrop-filter:blur(12px);pointer-events:none}
+  </style>
+  <script>
+  (()=>{
+    const ROOT='https://raw.githack.com/secondpandaonthemoon-sudovat/energy/main';
+    const mapUrl=v=>{
+      if(typeof v!=='string') return v;
+      if(v.startsWith('/src/assets/')) return ROOT+v;
+      if(v.startsWith('/assets/')) return ROOT+v;
+      return v;
+    };
+    // Static preview: public CMS endpoint is intentionally unavailable; runtime falls back to bundled state.
+    const nativeFetch=window.fetch.bind(window);
+    window.fetch=(input,init)=>{
+      const raw=typeof input==='string'?input:(input&&input.url)||'';
+      let path=raw; try{path=new URL(raw,location.href).pathname}catch(_){}
+      if(path==='/api/content'||path.endsWith('/api/content')) return Promise.resolve(new Response('{}',{status:503,headers:{'Content-Type':'application/json'}}));
+      if(path.includes('/api/admin/')||path==='/api/contact'||path==='/api/quotes') return Promise.resolve(new Response(JSON.stringify({ok:false,preview:true,error:'Canlı önizlemede sunucu işlemleri kapalıdır.'}),{status:409,headers:{'Content-Type':'application/json'}}));
+      return nativeFetch(input,init);
+    };
+    // Rewrite absolute project media paths so they work from the preview host.
+    const imgDesc=Object.getOwnPropertyDescriptor(HTMLImageElement.prototype,'src');
+    if(imgDesc&&imgDesc.set) Object.defineProperty(HTMLImageElement.prototype,'src',{configurable:true,enumerable:imgDesc.enumerable,get:imgDesc.get,set(v){imgDesc.set.call(this,mapUrl(v));}});
+    const nativeSet=Element.prototype.setAttribute;
+    Element.prototype.setAttribute=function(name,value){
+      if((name==='src'||name==='href')&&typeof value==='string') value=mapUrl(value);
+      return nativeSet.call(this,name,value);
+    };
+    const repair=()=>{
+      document.querySelectorAll('img[src^="/src/assets/"],source[src^="/src/assets/"]').forEach(el=>el.setAttribute('src',mapUrl(el.getAttribute('src'))));
+      document.querySelectorAll('[style*="/src/assets/"]').forEach(el=>{el.style.cssText=el.style.cssText.replaceAll('url("/src/assets/','url("'+ROOT+'/src/assets/').replaceAll("url('/src/assets/","url('"+ROOT+'/src/assets/');});
+    };
+    new MutationObserver(repair).observe(document.documentElement,{childList:true,subtree:true,attributes:true,attributeFilter:['src','style']});
+    window.addEventListener('load',repair); setTimeout(repair,250); setTimeout(repair,1200);
+    try{localStorage.setItem('asay_language','tr')}catch(_){}
+  })();
+  </script>
+</head>
+<body class="bg-[var(--theme-background)] text-[var(--theme-text)] antialiased selection:bg-[var(--theme-accent)] selection:text-white">
+  <div id="root"><div style="min-height:100vh;display:grid;place-items:center;font-family:Arial,sans-serif">ASAY Energy canlı önizleme yükleniyor…</div></div>
+  <div id="asay-preview-status">ASAY LIVE PREVIEW · MAIN KORUNUYOR</div>
+  <script type="module" src="https://raw.githack.com/secondpandaonthemoon-sudovat/energy/main/assets/app.js"></script>
+</body>
+</html>
